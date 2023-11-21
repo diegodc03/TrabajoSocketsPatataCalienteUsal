@@ -18,6 +18,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <time.h>
+
 
 
 
@@ -288,13 +290,6 @@ char *argv[];
 
 
 
-
-
-
-
-
-
-
 typedef struct{
 	char mensaje[TAM_BUFFER];
 	int numero;
@@ -305,14 +300,6 @@ typedef struct{
 	int num;
 	char cadena[BUFFERSIZE];
 }respuestasServidor;
-
-
-
-
-
-
-
-
 
 
 
@@ -332,6 +319,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 	int reqcnt = 0;		/* keeps count of number of requests */
 	char buf[TAM_BUFFER];		/* This example uses TAM_BUFFER byte messages. */
 	char hostname[MAXHOST];		/* remote host's name string */
+	
+	//Resolucion Patata Caliente
+	int valorAResolver;
+	int numIntentos;
 
 	int len, len1, status;
     struct hostent *hp;		/* pointer to host info for remote host */
@@ -375,6 +366,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		 */
 	linger.l_onoff  =1;
 	linger.l_linger =1;
+
+	
+
+
 	if (setsockopt(s, SOL_SOCKET, SO_LINGER, &linger,
 					sizeof(linger)) == -1) {
 		errout(hostname);
@@ -438,15 +433,40 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			switch (tipo)
 			{
 			case 1: //HOLA
+				// Al escribir HOLA lo que se hace es iniciar una nueva pregunta con lo que se envian los max intentos que hay junto con la pregunta
 				//Tiene que enviar <pregunta> # <intentos>
-
-
-
+				valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+				numIntentos = 5;
+				char mensajeBase[] = "Adivina el valor entre 0 y 100#";
+				char mensaje[BUFFERSIZE];
+				char numStr[10];
 				
+				strcat(mensaje, mensajeBase);
+				sprintf(numStr, "%d",numIntentos);
+				strcat(mensaje, numStr);
+				respServidor = (respuestasServidor) {250,mensaje};
+
+				//Añadimos al log
+				
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+					errout(hostname);
+				}
+
 				break;
 			case 2: //RESPUESTA
 				//Tiene que enviar si es mayor, menor y el numero de intentos restantes
-				//Si se acierta se enviará una respuesta de aviso
+				//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
+				if(msj.numero > numIntentos){
+					//Es MENOR EL NUMERO
+				}else if(msj.numero < numIntentos){
+					//EL NUMERO ES MAYOR
+				}else{
+					//ACIERTO
+				}
+				numIntentos = numIntentos - 1;
+
+				//Enviamos mensaje y lo añadimos al log
 
 				break;
 
@@ -721,7 +741,16 @@ Msj pasamosMensaje(char *buf){
 
 
 void calcularNumeroRandom(){
-	
+	int numMax = 100;
+	int numMin = 0;
+	srand((unsigned int)time(NULL));
+	 // Calcular el rango del número aleatorio
+    int rango = numMax - numMin + 1;
+
+    // Generar el número aleatorio y ajustarlo al rango
+    int numeroAleatorio = rand() % rango + min;
+
+	return numeroAleatorio;
 }
 
 

@@ -126,6 +126,56 @@ char *argv[];
 			argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
 
+
+	//TENDRA QUE LLEGAR EL MENSAJE DE "SERVIDOR PREPARADO PARA QUE SE PUEDA EJECUTAR EL HOLA, Y CORRESPONDIENTEMENTE EL JUEGO"
+	//uSARE UN TIPO DE IPCs, progablemente semaforos
+	// Iniciar el juego enviando un saludo al servidor
+    strcpy(buf, "HOLA");
+    if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) {
+        fprintf(stderr, "%s: Conexión abortada al iniciar el juego\n", argv[0]);
+        exit(1);
+    }
+
+
+	//Bucle del juego --> Cuando conteste el cliente ADIOS, PARA DESCONECTARSE CON EL SERVIDOR
+	int booleano = 0;
+	while(booleano = 0){
+
+		//Recibimos el mensaje.
+		// Recibir el mensaje del servidor
+        if (recv(s, buf, TAM_BUFFER, 0) == -1) {
+            perror(argv[0]);
+            fprintf(stderr, "%s: error leyendo el mensaje del servidor\n", argv[0]);
+            exit(1);
+        }
+
+		//Escrbimos el mensaje que nos llega.
+		printf("El mensaje proviniente del servidor es: \n\t %s", buf);
+
+
+		//Escribimos el mensaje al servidor.
+		if(strcmp(buf, "Cerrando el Servicio")){
+
+			booleano = 1;
+
+		}else if(strcmp(buf, "ACIERTO")){
+
+		}else if(strcmp(buf, "Error de sintaxis")){
+
+		}else{
+			//Aqui tenemos tanto la pregunta como
+
+
+
+
+		}
+
+
+	}
+
+
+
+
 	for (i=1; i<=5; i++) {
 		*buf = i;
 		if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) {
@@ -189,4 +239,29 @@ char *argv[];
     /* Print message indicating completion of task. */
 	time(&timevar);
 	printf("All done at %s", (char *)ctime(&timevar));
+}
+
+
+
+
+
+int esLetra(char *letra){
+
+	if(strcmp(letra, "#"));
+
+	return 1;
+
+}
+
+
+void dividirFraseEnDos(char fraseCompleta, char parte1, char parte2){
+
+	int longitud = len(fraseCompleta);
+
+	for (int i=0; i<longitud; i++){
+		
+	}
+
+
+
 }

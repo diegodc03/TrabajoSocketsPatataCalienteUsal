@@ -51,7 +51,7 @@ extern int errno;
  *	will loop forever, until killed by a signal.
  *
  */
- 
+Msj pasamosMensaje(char *buf);
 void serverTCP(int s, struct sockaddr_in peeraddr_in);
 void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in);
 void errout(char *);		/* declare error out routine */
@@ -304,6 +304,9 @@ typedef struct{
 
 
 
+
+
+
 /*
  *				S E R V E R T C P
  *
@@ -386,6 +389,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		 * follow, and the loop will be exited.
 		 */
 
+
+		int i;
+	//Finalizar el bucle ya que quiere terminar xd
+	int finalizacion = 0;
 	//buf es el mensaje que se recibe
 	while (len = recv(s, buf, TAM_BUFFER, 0)) {
 		if (len == -1) errout(hostname); /* error from recv */
@@ -409,7 +416,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			len += len1;
 		}
 
-			
 			if(removeCRLF(buf)){
 				fprint(stderr, "Command without CR-LF. Aborted connection\n");
 				exit(1);
@@ -421,20 +427,22 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			Msj msj;
 			tipo = comprobacionMensaje(buf);
 
-			//Si retorna 1, es una respuesta, entonces llevara RESPUESA <numero> por lo que lo dividimos
-			if(tipo == 1){
+			//Si retorna 2, es una respuesta, entonces llevara RESPUESA <numero> por lo que lo dividimos
+			if(tipo == 2){
 				msj = pasamosMensaje(buf);
 				strcpy(buf, 'RESPUESTA', sizeof(buf));
 			}
 			
-			
+			//Declaro variables para ver si se puede entrar en los casos o no
+			int mensajeHola = 0; //En el momento que entre en Hola ya no podria entrar mas, es el primer mensaje del servidor
+			int estamosJugando = 0;
 
-			//Tendre que hacer una funcion en la cual compruebo de se manda, ya que pòr ejemplo respuesta no es solo respuesta, es RESPUESTA <NUMERO>
-			switch (tipo)
-			{
-			case 1: //HOLA
-				// Al escribir HOLA lo que se hace es iniciar una nueva pregunta con lo que se envian los max intentos que hay junto con la pregunta
-				//Tiene que enviar <pregunta> # <intentos>
+
+			//Cliente "HOLA"	
+			if (tipo == 1 && mensajeHola == 0){
+
+				mensajeHola = 1; //No volvera a entrar
+				
 				valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
 				numIntentos = 5;
 				char mensajeBase[] = "Adivina el valor entre 0 y 100#";
@@ -445,40 +453,88 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 				sprintf(numStr, "%d",numIntentos);
 				strcat(mensaje, numStr);
 				respServidor = (respuestasServidor) {250,mensaje};
-
+				estamosJugando = 1;
 				//Añadimos al log
 				
 				añadirCRLF(respServidor.cadena, BUFFERSIZE);
 				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
 					errout(hostname);
 				}
-
-				break;
-			case 2: //RESPUESTA
+			}
+			//Cliente RESPUESTA <NUMERO>
+			else if(tipo == 2 && estamosJugando == 1){
+				char mensaje[BUFFERSIZE];
+				char numStr[BUFFERSIZE];
+				i = 0;
+				numIntentos = numIntentos - 1;
 				//Tiene que enviar si es mayor, menor y el numero de intentos restantes
 				//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
-				if(msj.numero > numIntentos){
+				if(msj.numero > valorAResolver){
 					//Es MENOR EL NUMERO
-				}else if(msj.numero < numIntentos){
+					strcpy(mensaje, "MENOR");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+
+				}else if(msj.numero < valorAResolver){
 					//EL NUMERO ES MAYOR
+					strcpy(mensaje, "MAYOR");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
 				}else{
 					//ACIERTO
+					i=1;
+					strcpy(mensaje, "ACIERTO");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
 				}
-				numIntentos = numIntentos - 1;
 
-				//Enviamos mensaje y lo añadimos al log
+				if(i==1){
+					//ACIERTO
+					respServidor = (respuestasServidor) {350,mensaje};
+					estamosJugando = 0;
+				}else{
+					//NO ACIERTO
+					respServidor = (respuestasServidor) {254,mensaje};
+				}
 
-				break;
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+					errout(hostname);
+				}
 
-			case 3: //+
+				//Lo tengo que añadir al log
+
+			}
+			//Cliente "+"
+			else if(tipo == 3 && (estamosJugando == 0 || numIntentos == 0 && mensajeHola == 1)){	//Solo se mete si numero de errores = 0 ooooo hemos terminado
 				//Tiene que enviar <pregunta> # <intentos>
 
-
-				break;
-
-			case 4:		//ADIOS 	Se cierra el servicio
 				
+					
+				valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+				numIntentos = 5;
+				char mensajeBase[] = "Adivina el valor entre 0 y 100#";
+				char mensaje[BUFFERSIZE];
+				char numStr[10];
+			
+				strcat(mensaje, mensajeBase);
+				sprintf(numStr, "%d",numIntentos);
+				strcat(mensaje, numStr);
+				respServidor = (respuestasServidor) {250,mensaje};
+
+				//Añadimos al log
 				
+					
+				
+
+				//Añador el log
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+					if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+						errout(hostname);
+					}
+			}
+			//Cliente "ADIOS"
+			else if(tipo == 4){
 				respServidor = (respuestasServidor) {221, "221 Cerrando el Servicio"};
 				
 				/*
@@ -491,12 +547,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
 					errout(hostname);
 				}
-
-				break;
-
-			default:			//Incorrecto	Todo lo que no sea las otras respuestas sera erroneo
-				
-
+				finalizacion = 1;
+			}
+			// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
+			else{
 				respServidor = (respuestasServidor) {500, "500 Error de sintaxis"};
 
 				//Tengo que añadir los comandos a un archivo
@@ -505,10 +559,8 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 				if(send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE){
 					errout(hostname);
 				}
-
-				break;
 			}
-		}
+
 
 			/* Increment the request count. */
 		reqcnt++;
@@ -517,7 +569,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			 */
 		sleep(1);
 			/* Send a response back to the client. */
-		if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
+		//if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
+		if(finalizacion == 1){
+			break; 		//Se sale del bucle
+		}
 	}
 
 		/* The loop has terminated, because there are no
@@ -552,26 +607,6 @@ void errout(char *hostname)
 	printf("Connection with %s aborted on error\n", hostname);
 	exit(1);     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -633,13 +668,8 @@ void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in)
 
 
 
-
-
-
-
-
 int writeFile(char *buf){
-
++
 }
 
 
@@ -698,18 +728,19 @@ int comprobacionMensaje(char *cadena){
 		i++;
 	}
 
-	if(strcmp(buf, "HOLA")){
+	if(strcmp(cadena, "HOLA")){
 		return 1;
-	}else if(strcmp(buf, "+")){
+	}else if(strcmp(cadena, "+")){
 		return 3;
-	}else if(strcmp(buf, "ADIOS")){
+	}else if(strcmp(cadena, "ADIOS")){
 		return 4;
 	}
 
 	return 5;
 }
 
-Msj pasamosMensaje(char *buf){
+
+Msj pasamosMensaje(char *cadena){
 
 	Msj msj;
     int i = 0;
@@ -740,7 +771,7 @@ Msj pasamosMensaje(char *buf){
 }
 
 
-void calcularNumeroRandom(){
+int calcularNumeroRandom(){
 	int numMax = 100;
 	int numMin = 0;
 	srand((unsigned int)time(NULL));
@@ -748,10 +779,191 @@ void calcularNumeroRandom(){
     int rango = numMax - numMin + 1;
 
     // Generar el número aleatorio y ajustarlo al rango
-    int numeroAleatorio = rand() % rango + min;
+    int numeroAleatorio = rand() % rango + numMin;
 
 	return numeroAleatorio;
 }
 
 
+//Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
+void aniadirAlLog(char *nombre, respuestasServidor resp){
+	
+	FILE *Fich;
+	strcat(nombre,".txt");
+	if((Fich = fopen(nombre, "a")) == NULL){
+		//Fichero corrompido
+		return;
+	}
+	char* valor[BUFFERSIZE];
+	sprintf(valor,"%d ", resp.num);
+	strcat(valor, resp.cadena);
+	//Fichero abierto correctamente
+	fprintf(Fich,valor);
 
+
+	fclose(Fich);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+			//Tendre que hacer una funcion en la cual compruebo de se manda, ya que pòr ejemplo respuesta no es solo respuesta, es RESPUESTA <NUMERO>
+			switch (tipo)
+			{
+			case 1: //HOLA
+				// Al escribir HOLA lo que se hace es iniciar una nueva pregunta con lo que se envian los max intentos que hay junto con la pregunta
+				//Tiene que enviar <pregunta> # <intentos>
+				valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+				numIntentos = 5;
+				char mensajeBase[] = "Adivina el valor entre 0 y 100#";
+				char mensaje[BUFFERSIZE];
+				char numStr[10];
+				
+				strcat(mensaje, mensajeBase);
+				sprintf(numStr, "%d",numIntentos);
+				strcat(mensaje, numStr);
+				respServidor = (respuestasServidor) {250,mensaje};
+
+				//Añadimos al log
+				
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+					errout(hostname);
+				}
+
+				break;
+			case 2: //RESPUESTA
+				char mensaje[BUFFERSIZE];
+				char numStr[BUFFERSIZE];
+				i = 0;
+				numIntentos = numIntentos - 1;
+				//Tiene que enviar si es mayor, menor y el numero de intentos restantes
+				//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
+				if(msj.numero > valorAResolver){
+					//Es MENOR EL NUMERO
+					strcpy(mensaje, "MENOR");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+
+				}else if(msj.numero < valorAResolver){
+					//EL NUMERO ES MAYOR
+					strcpy(mensaje, "MAYOR");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+				}else{
+					//ACIERTO
+					i=1;
+					strcpy(mensaje, "ACIERTO");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+				}
+
+				if(i==1){
+					//ACIERTO
+					respServidor = (respuestasServidor) {350,mensaje};
+				}else{
+					//NO ACIERTO
+					respServidor = (respuestasServidor) {254,mensaje};
+				}
+
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+					errout(hostname);
+				}
+
+				//Lo tengo que añadir al log
+
+				break;
+
+			case 3: //+
+				//Tiene que enviar <pregunta> # <intentos>
+
+				if(i == 1 || numIntentos == 0){
+					
+					valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+					numIntentos = 5;
+					char mensajeBase[] = "Adivina el valor entre 0 y 100#";
+					char mensaje[BUFFERSIZE];
+					char numStr[10];
+				
+					strcat(mensaje, mensajeBase);
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje, numStr);
+					respServidor = (respuestasServidor) {250,mensaje};
+
+					//Añadimos al log
+				
+					
+				}else{
+					
+					respServidor = (respuestasServidor) {221, "221 Cerrando el Servicio"};
+
+				}
+
+				//Añador el log
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+					if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+						errout(hostname);
+					}
+
+
+				break;
+
+			case 4:		//ADIOS 	Se cierra el servicio
+				
+				
+				respServidor = (respuestasServidor) {221, "221 Cerrando el Servicio"};
+				
+				/*
+					if(-1 == addCommandToLog(comResp.message, true)){
+					perror("No se ha podido a�adir la respuesta al fichero nntpd.log");
+				}
+				
+				
+				añadirCRLF(respServidor.cadena, BUFFERSIZE);
+				if (send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE) {
+					errout(hostname);
+				}
+				finalizacion = 1;
+				break;
+
+			default:			//Incorrecto	Todo lo que no sea las otras respuestas sera erroneo
+				
+
+				respServidor = (respuestasServidor) {500, "500 Error de sintaxis"};
+
+				//Tengo que añadir los comandos a un archivo
+
+				añadorCRLF(respServidor.cadena, BUFFERSIZE);
+				if(send(s, respServidor.cadena, BUFFERSIZE, 0) != BUFFERSIZE){
+					errout(hostname);
+				}
+
+				break;
+			}
+		}
+
+*/

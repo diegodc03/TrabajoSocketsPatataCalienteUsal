@@ -21,9 +21,9 @@
 #include <netdb.h>
 #include <string.h>
 #include <time.h>
+#include <select.h>
 
-#define PUERTO 17278
-#define TAM_BUFFER 10
+#include "funciones.h"
 
 /*
  *			M A I N
@@ -127,54 +127,82 @@ char *argv[];
 
 
 
-	//TENDRA QUE LLEGAR EL MENSAJE DE "SERVIDOR PREPARADO PARA QUE SE PUEDA EJECUTAR EL HOLA, Y CORRESPONDIENTEMENTE EL JUEGO"
-	//uSARE UN TIPO DE IPCs, progablemente semaforos
-	// Iniciar el juego enviando un saludo al servidor
-    strcpy(buf, "HOLA");
-    if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) {
-        fprintf(stderr, "%s: Conexión abortada al iniciar el juego\n", argv[0]);
-        exit(1);
-    }
+	
 
-
+	char mensaje[TAM_BUFFER];
 	//Bucle del juego --> Cuando conteste el cliente ADIOS, PARA DESCONECTARSE CON EL SERVIDOR
 	int booleano = 0;
 	while(booleano = 0){
 
 		//Recibimos el mensaje.
 		// Recibir el mensaje del servidor
-        if (recv(s, buf, TAM_BUFFER, 0) == -1) {
+        while (i = recv(s, buf, TAM_BUFFER, 0)) {
+		if (i == -1) {
             perror(argv[0]);
-            fprintf(stderr, "%s: error leyendo el mensaje del servidor\n", argv[0]);
-            exit(1);
-        }
+			fprintf(stderr, "%s: error reading result\n", argv[0]);
+			exit(1);
+		}
+			/* The reason this while loop exists is that there
+			 * is a remote possibility of the above recv returning
+			 * less than TAM_BUFFER bytes.  This is because a recv returns
+			 * as soon as there is some data, and will not wait for
+			 * all of the requested data to arrive.  Since TAM_BUFFER bytes
+			 * is relatively small compared to the allowed TCP
+			 * packet sizes, a partial receive is unlikely.  If
+			 * this example had used 2048 bytes requests instead,
+			 * a partial receive would be far more likely.
+			 * This loop will keep receiving until all TAM_BUFFER bytes
+			 * have been received, thus guaranteeing that the
+			 * next recv at the top of the loop will start at
+			 * the begining of the next reply.
+			 */
+		while (i < TAM_BUFFER) {
+			j = recv(s, &buf[i], TAM_BUFFER-i, 0);
+			if (j == -1) {
+                     perror(argv[0]);
+			         fprintf(stderr, "%s: error reading result\n", argv[0]);
+			         exit(1);
+               }
+			i += j;
+		}
 
 		//Escrbimos el mensaje que nos llega.
 		printf("El mensaje proviniente del servidor es: \n\t %s", buf);
 
 
+
 		//Escribimos el mensaje al servidor.
 		if(strcmp(buf, "Cerrando el Servicio")){
-
 			booleano = 1;
+			
+			//Añadir al log
+			if(aniadirAlLog(CLIENTE, mensaje) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");	
+			}
 
-		}else if(strcmp(buf, "ACIERTO")){
-
-		}else if(strcmp(buf, "Error de sintaxis")){
 
 		}else{
-			//Aqui tenemos tanto la pregunta como
+			//No se sale, el cliente debera escribir un mensaje
+			scanf("%s", buf);
 
+			//Añadir al log
+			if(aniadirAlLog(CLIENTE, mensaje) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");	
+			}
 
+			//Añadir CRLF
+			aniadirCRLF(buf,TAM_BUFFER);
 
-
+			//Enviar mensaje al servidor
+			if (send(s, buf, TAM_BUFFER, 0) != BUFFERSIZE) {
+					fprintf(stderr, "%s: Conexión abortada al iniciar el juego\n", argv[0]);
+        			exit(1);
+				}
 		}
-
-
 	}
 
 
-
+/**/
 
 	for (i=1; i<=5; i++) {
 		*buf = i;

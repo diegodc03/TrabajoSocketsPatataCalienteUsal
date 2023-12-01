@@ -22,8 +22,27 @@
 #include <string.h>
 #include <time.h>
 
+#define PUERTO 43687 
+#define TAM_BUFFER 516
+#define BEFFERSIZE 516
 
-#include "funciones.h"
+#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
+#define LF '\n'
+#define TC '\0'		//Terminacion de Cadena
+
+
+#define CLIENTE "cliente"
+#define SERVIDOR "servidor"
+#define HOLA "HOLA"
+#define RESPUESTA "RESPUESTA"
+#define SIGNOSUMA "+"
+#define ADIOS "ADIOS"
+
+
+//Funciones 
+int aniadirAlLog(char *, char *);
+int eliminarCRLF(char *);
+
 
 /*
  *			M A I N
@@ -48,7 +67,9 @@ char *argv[];
     struct sockaddr_in servaddr_in;	/* for server socket address */
 	int addrlen, i, j, errcode;
     /* This example uses TAM_BUFFER byte messages. */
-	char buf[BUFFERSIZE];
+	char buf[TAM_BUFFER];
+	const char *subcadena = "\r\n";
+
 
 	if (argc != 2) {
 		fprintf(stderr, "Usage:  %s <remote host>\n", argv[0]);
@@ -125,23 +146,30 @@ char *argv[];
 	printf("Connected to %s on port %u at %s",
 			argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
-
-
 	
+	
+		/* Now, shutdown the connection for further sends.
+		 * This will cause the server to receive an end-of-file
+		 * condition after it has received all the requests that
+		 * have just been sent, indicating that we will not be
+		 * sending any further requests.
+		 * if (shutdown(s, 1) == -1) {
+		perror(argv[0]);
+		fprintf(stderr, "%s: unable to shutdown socket\n", argv[0]);
+		exit(1);
+	}
+		 */
+	
+
 		/* Now, start receiving all of the replys from the server.
 		 * This loop will terminate when the recv returns zero,
 		 * which is an end-of-file condition.  This will happen
 		 * after the server has sent all of its replies, and closed
 		 * its end of the connection.
 		 */
-	char mensaje[BUFFERSIZE];
-	//Bucle del juego --> Cuando conteste el cliente ADIOS, PARA DESCONECTARSE CON EL SERVIDOR
-	int booleano = 0;
-	while(booleano == 0){
-
-		//Recibimos el mensaje.
-		// Recibir el mensaje del servidor
-        while (i == recv(s, buf, BUFFERSIZE, 0)) {
+	int aux;
+	
+	while (i = recv(s, buf, TAM_BUFFER, 0)) {
 		if (i == -1) {
             perror(argv[0]);
 			fprintf(stderr, "%s: error reading result\n", argv[0]);
@@ -161,8 +189,8 @@ char *argv[];
 			 * next recv at the top of the loop will start at
 			 * the begining of the next reply.
 			 */
-		while (i < BUFFERSIZE) {
-			j = recv(s, &buf[i], BUFFERSIZE-i, 0);
+		while (i < TAM_BUFFER) {
+			j = recv(s, &buf[i], TAM_BUFFER-i, 0);
 			if (j == -1) {
                      perror(argv[0]);
 			         fprintf(stderr, "%s: error reading result\n", argv[0]);
@@ -171,60 +199,74 @@ char *argv[];
 			i += j;
 		}
 
-		//Escrbimos el mensaje que nos llega.
-		printf("El mensaje proviniente del servidor es: \n\t %s", buf);
+		//Eliminamos CRLF
+		aux = eliminarCRLF(buf);
+		
 
-
-
-		//Escribimos el mensaje al servidor.
-		if(strcmp(buf, "Cerrando el Servicio")){
-			booleano = 1;
-			
-			//Añadir al log
-			if(aniadirAlLog(CLIENTE, mensaje) == -1){
-				perror("No se ha podido añadir la respuesta al fichero");	
-			}
-
-
-		}else{
-			//No se sale, el cliente debera escribir un mensaje
-			scanf("%s", buf);
-
-			//Añadir al log
-			if(aniadirAlLog(CLIENTE, mensaje) == -1){
-				perror("No se ha podido añadir la respuesta al fichero");	
-			}
-
-			//Añadir CRLF
-			aniadirCRLF(buf,BUFFERSIZE);
-
-			//Enviar mensaje al servidor
-			if (send(s, buf, BUFFERSIZE, 0) != BUFFERSIZE) {
-					fprintf(stderr, "%s: Conexión abortada al iniciar el juego\n", argv[0]);
-        			exit(1);
-				}
+		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
+		if(strcmp(buf, "220 Servicio Preparado")== 0){
+			aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado");
 		}
-	}
-
-	if (shutdown(s, 1) == -1) {
-		perror(argv[0]);
-		fprintf(stderr, "%s: unable to shutdown socket\n", argv[0]);
-		exit(1);
-	}
 
 		
-	
+
+
+
+
+
+
+		// printf("Aqui abajo debe ir la respuesta del servidor");
+		printf("%s",buf);
+		scanf("%s",buf);
+		strcat(buf,"\r\n");
+
+		
+		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){
+			fprintf(stderr,"error");
+			exit(1);
+		}
+
+
+			/* Print out message indicating the identity of this reply. */
+	}
+
     /* Print message indicating completion of task. */
 	time(&timevar);
-	fprintf(mensaje,"All done at %s", (char *)ctime(&timevar));
-	if(aniadirAlLog(CLIENTE, mensaje) == -1){
-		perror("no se ha podido añadir la respuesta al fichero");
+	printf("All done at %s", (char *)ctime(&timevar));
+}
+
+
+//Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
+int aniadirAlLog(char *nombre, char *cadena){
+	
+	FILE *Fich;
+	if((Fich = fopen(nombre, "a")) == NULL){
+		//Fichero corrompido
+		return -1;
 	}
 	
+	//Fichero abierto correctamente
+	fprintf(Fich,"%s",cadena);
+
+	fclose(Fich);
+	return 0;
 }
+
+
+
+int eliminarCRLF(char *string){
+	int i=0;
+	
+	//Bucle infinito ya que retornaremos un valor, y luego como se pasa por refrencia la cadena no hay que retornarña
+	while(1){
+		if(string[i]== CR && string[i+1] == LF){
+			string[i] = TC;
+			return 0;
+		}
+		if (i==TAM_BUFFER-2){
+			return 1;
+		}
+	
+		i++;
+	}
 }
-
-
-
-
-

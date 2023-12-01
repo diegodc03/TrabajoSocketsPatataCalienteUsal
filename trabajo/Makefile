@@ -1,22 +1,28 @@
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -Wextra -g
 #Descomentar la siguiente linea para olivo
 #LIBS = -lsocket -lnsl
 #Descomentar la siguiente linea para linux
 LIBS =
 
-PROGS = servidor clientcp clientudp
+PROGS = servidor clientcp 
 
 all: ${PROGS}
 
-servidor: servidor.o
-	${CC} ${CFLAGS} -o $@ servidor.o ${LIBS}
+servidor: servidor.o funciones.o
+	${CC} ${CFLAGS} -o $@ servidor.o funciones.o 
 	
-clientcp: clientcp.o
-	${CC} ${CFLAGS} -o $@ clientcp.o ${LIBS}
+clientcp: clientcp.o funciones.o
+	${CC} ${CFLAGS} -o $@ clientcp.o funciones.o 
 
-clientudp: clientudp.o
-	${CC} ${CFLAGS} -o $@ clientudp.o ${LIBS}
+servidor.o: servidor.c funciones.h
+	$(CC) $(CFLAGS) -c servidor.c
+
+clientcp.o: clientcp.c funciones.h
+	$(CC) $(CFLAGS) -c clientcp.c
+
+funciones.o: funciones.c funciones.h
+	$(CC) $(CFLAGS) -c funciones.c
 
 clean:
 	rm *.o ${PROGS}

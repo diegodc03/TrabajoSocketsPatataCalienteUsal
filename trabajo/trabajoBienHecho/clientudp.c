@@ -16,6 +16,8 @@
  *	the host name.
  *
  */
+ 
+ //hhff
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/errno.h>
@@ -27,15 +29,14 @@
 #include <netdb.h>
 #include <string.h>
 #include <time.h>
-#include <select.h>
 #include <unistd.h>
 
 extern int errno;
 
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
 #define RETRIES	5		/* number of times to retry before givin up */
-#define BUFFERSIZE	516	/* maximum size of packets to be received */
-#define PUERTO 17278
+#define BUFFERSIZE	1024	/* maximum size of packets to be received */
+#define PUERTO 43687 
 #define TIMEOUT 6
 #define MAXHOST 512
 /*

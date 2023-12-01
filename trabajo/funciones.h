@@ -9,9 +9,9 @@
 
 //Declaracion de variables
 
-#define PUERTO 17278
+#define PUERTO 43687
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
-#define BUFFERSIZE	1024	/* maximum size of packets to be received */
+#define BUFFERSIZE	516	/* maximum size of packets to be received */
 #define TAM_BUFFER 10
 #define MAXHOST 128
 #define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
@@ -19,12 +19,12 @@
 #define TC '\0'		//Terminacion de Cadena
 
 
-#define CLIENTE 'cliente'
-#define SERVIDOR 'servidor'
-#define HOLA 'HOLA'
-#define RESPUESTA 'RESPUESTA'
-#define SIGNOSUMA '+'
-#define ADIOS 'ADIOS'
+#define CLIENTE "cliente"
+#define SERVIDOR "servidor"
+#define HOLA "HOLA"
+#define RESPUESTA "RESPUESTA"
+#define SIGNOSUMA "+"
+#define ADIOS "ADIOS"
 
 
 extern int errno;
@@ -47,7 +47,7 @@ typedef struct{
 
 
 //Funciones
-int removerCRLF(char *);
+int removeCRLF(char *);
 void aniadirCRLF(char *, int );
 int comprobacionMensaje(char *);
 Msj pasamosMensaje(char *);

@@ -1,6 +1,6 @@
 
 
-//dsadasda
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +9,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <ctype.h>
+#include "funciones.h"
 
 
 
@@ -21,7 +22,7 @@
 
 
 //Eliminamos de string CR-LF
-int removerCRLF(char *string){
+int removeCRLF(char *string){
 
 	int i=0;
 	//Bucle infinito ya que retornaremos un valor, y luego como se pasa por refrencia la cadena no hay que retornarña
@@ -140,9 +141,10 @@ int aniadirAlLog(char *nombre, char *cadena){
 	}
 	
 	//Fichero abierto correctamente
-	fprintf(Fich,cadena);
+	fprintf(Fich,"%s",cadena);
 
 	fclose(Fich);
+	return 0;
 }
 
 char* aniadirCadena(char* cadena1,char* cadena2){

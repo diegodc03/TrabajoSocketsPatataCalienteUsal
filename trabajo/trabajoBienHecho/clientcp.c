@@ -43,6 +43,9 @@
 int aniadirAlLog(char *, char *);
 int eliminarCRLF(char *);
 
+//Struct
+
+
 
 /*
  *			M A I N
@@ -205,22 +208,38 @@ char *argv[];
 
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
 		if(strcmp(buf, "220 Servicio Preparado")== 0){
-			aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado");
+			printf("%s\n",buf);
+			aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
+		}
+		else if(strcmp(buf,"221 Cerrando el Servicio") == 0){
+			printf("%s\n",buf);
+			aniadirAlLog("cliente.txt", buf);
+			break;
+		}else{
+
+			//Respuesta del servidor
+			printf("%s\n",buf);
+			aniadirAlLog("cliente.txt", buf);
 		}
 
 		
 
 
 
+		//Respuesta del cliente
+		fgets(buf, TAM_BUFFER-2, stdin);
+		int len = strlen(buf);
+		if(len > 0 && buf[len-1] == '\n'){
+			buf[len-1] = '\0';
+		}
 
-
-
-		// printf("Aqui abajo debe ir la respuesta del servidor");
-		printf("%s",buf);
-		scanf("%s",buf);
-		strcat(buf,"\r\n");
-
+		printf("%s", buf);
 		
+		aniadirAlLog("cliente.txt", buf);
+
+
+
+		strcat(buf,"\r\n");
 		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){
 			fprintf(stderr,"error");
 			exit(1);
@@ -246,13 +265,23 @@ int aniadirAlLog(char *nombre, char *cadena){
 	}
 	
 	//Fichero abierto correctamente
-	fprintf(Fich,"%s",cadena);
+	fprintf(Fich,"%s\n",cadena);
 
 	fclose(Fich);
 	return 0;
 }
 
+void dividirCadena(char *cadena, int *numero, char *frase) {
+    // Usar strtok para dividir la cadena en espacios
+    char *token = strtok(cadena, " ");
+    
+    // Convertir el primer token en número
+    *numero = atoi(token);
 
+    // Usar strtok(NULL, "") para obtener el resto de la cadena como frase
+    token = strtok(NULL, "");
+    strcpy(frase, token);
+}
 
 int eliminarCRLF(char *string){
 	int i=0;

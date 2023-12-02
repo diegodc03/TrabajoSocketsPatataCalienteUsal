@@ -49,6 +49,10 @@ int calcularNumeroRandom();
 void aniadirCRLF(char *, int );
 int eliminarCRLF(char *string);
 
+
+
+
+
 /*
  *			M A I N
  *
@@ -389,7 +393,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 	int numero = 0;
 	int aux= 0;
 	int numIntentos;
-
+	int valorAResolver;
 
 
 	if (send(s, "220 Servicio Preparado\r\n", TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
@@ -426,23 +430,24 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 
 		//Se elimina \r\n
 		aux = eliminarCRLF(buf);
+		
+
 
 		//Empezamos funcionalidad del programa
 		tipo = comprobarMensaje(buf);
-
-
+		//printf("\n%d\n",tipo);
+		
 		//Comprobamos si es tipo = 2, ya que tendria una respuesta y son dos mensjes a tener
 		if(tipo == 2){
-			
 			numero = obtenerNumero(buf);
 		}
 
 
 
 		//DEPENDIENDO EL CLIENTE, SE DEVOLVERÁ UNA COSA U OTRA
+
 		//HOLA
 		if(tipo == 1 && mensajeHola == 0){
-			int valorAResolver;
 			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
 			numIntentos = 5;
 			char numStr[10];
@@ -452,23 +457,102 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			sprintf(numStr, "%d",numIntentos);
 			strcat(mensaje, numStr);
 			estamosJugando = 1;
+			mensajeHola = 1;
 
-			aniadirCRLF(mensaje, TAM_BUFFER);
-			if (send(s, mensaje, TAM_BUFFER, 0) != BUFFERSIZE) {
+			//aniadirCRLF(mensaje, TAM_BUFFER);
+			strcat(mensaje, "\r\n");
+			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
 				errout(hostname);
 			}
 		}
 		//RESPUESTA <NUMERO>
 		else if(tipo == 2 && estamosJugando == 1){
+			char numStr[TAM_BUFFER];
+			char mensaje[TAM_BUFFER];
+			i = 0;
+			numIntentos = numIntentos - 1;
+			//printf("\n%d\t", valorAResolver);
+			printf("\n%d\t", numero);
+			//Tiene que enviar si es mayor, menor y el numero de intentos restantes
+			//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
+
+			if(numIntentos == 0){
+				strcpy(mensaje, "375 FALLO");
+				estamosJugando = 0;
+			}else{
+
+				if(numero > valorAResolver){
+					//Es MENOR EL NUMERO				
+					strcpy(mensaje, "354 MENOR#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+
+				}else if(numero < valorAResolver){
+					//EL NUMERO ES MAYOR
+					strcpy(mensaje, "354 MAYOR#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+				}else {
+
+					//ACIERTO
+					i=1;
+					strcpy(mensaje, "350 ACIERTO#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+					estamosJugando = 0;
+					}
+			}
+
+			//Añadir al log
+			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
+			aniadirCRLF(mensaje, TAM_BUFFER);
+			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER ) {
+				errout(hostname);
+			}
+			
 
 		}
 		//Cliente "+"
 		else if(tipo == 3 && (estamosJugando == 0 || numIntentos == 0) && mensajeHola == 1){	//Solo se mete si numero de errores = 0 ooooo hemos terminado){
+			char mensaje[TAM_BUFFER];
+			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+			numIntentos = 5;
+			estamosJugando = 1;
+			char numStr[10];
 
+			strcpy(mensaje, "250 Adivina el valor entre 0 y 100#");
+			sprintf(numStr, "%d",numIntentos);
+			strcat(mensaje, numStr);
+
+			//Añadir al log
+			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
+					
+			aniadirCRLF(mensaje, TAM_BUFFER);
+			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
+				errout(hostname);
+			}
+			
 		}
 		//Cliente "ADIOS"
 		else if(tipo == 4){
+			char mensaje[TAM_BUFFER];
+			strcpy(mensaje, "221 Cerrando el Servicio");
+					
+			//Añadir al log
+			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
 
+			aniadirCRLF(mensaje, TAM_BUFFER);
+			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
+				errout(hostname);
+			}
+			finalizacion = 1;
+			
 		}
 		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
 		else{
@@ -481,8 +565,11 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 
 
 			/* Send a response back to the client. */
-			strcat(buf, "\r\n");
-		if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
+			//strcat(buf, "\r\n");
+		///if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
+		if(finalizacion == 1){
+			break;
+		}
 	}
 
 		/* The loop has terminated, because there are no
@@ -526,22 +613,23 @@ void errout(char *hostname)
 int comprobarMensaje(char *cadena){
 	//Hay un mensaje que tiene dos partes, implica que quiero saber las dos
 	int i=0;
-	while(cadena[i] != '\0'){
-
-		if(isspace(cadena[i])){
-			return 2;
-		}
-		i++;
-	}
+	
+	/*
+	char token[TAM_BUFFER];
+	token = strtok(cadena, "");
+	if(strncmp(token, "RESPUESTA") == 0){
+		return 2;
+	}*/
 
 	if(strcmp(cadena, "HOLA") == 0){
 		return 1;
+	}else if(strncmp(cadena, "RESPUESTA", 8) == 0){
+		return 2;
 	}else if(strcmp(cadena, "+") == 0){
 		return 3;
 	}else if(strcmp(cadena, "ADIOS") == 0){
 		return 4;
 	}
-
 	return 5;
 }
 
@@ -549,11 +637,31 @@ int comprobarMensaje(char *cadena){
 int obtenerNumero(char *cadena){
 
 	int numero = 0;
-    
-    // Utilizamos sscanf para buscar un número en la cadena
-    sscanf(cadena, "%*[^0-9]%d", &numero);
-    
-    return numero;
+    char *token;
+
+	//strtok coge los elementos de uno en uno, es decir, si divide RESPUESTA 23,  y le decies que lo divide 
+	// por espacio, implica que strtok cogerá cla cadena hasta el proximo espacio despues de el espacio en este caso
+	// es decir, el primer token sera devuelto para RESPUESTA y luego usando strtok(NULL, "") me dara el siguiente valor del string, el numero.	
+	/*
+	token = strtok(cadena, "");
+	int contador = 0;
+
+	while(token != NULL){
+		if(contador == 1){ //La segunda parte debe estar en la posicion 1
+			numero = atoi(token);
+			break;
+		}
+		token = strtok(NULL, "");	//Obtener el siguiente token
+		contador = contador + 1;
+	}
+	return numero;
+	*/
+
+
+	if (sscanf(cadena, "RESPUESTA %d", &numero) == 1) {
+        return numero;
+    }
+
 
 }
 
@@ -578,7 +686,7 @@ int aniadirAlLog(char *nombreFichero, char *cadena){
 
 
 int calcularNumeroRandom(){
-	int numMax = 100;
+	int numMax = 10;
 	int numMin = 0;
 	srand((unsigned int)time(NULL));
 	 // Calcular el rango del número aleatorio
@@ -586,7 +694,7 @@ int calcularNumeroRandom(){
 
     // Generar el número aleatorio y ajustarlo al rango
     int numeroAleatorio = rand() % rango + numMin;
-
+	printf("\t%d\n", numeroAleatorio);
 	return numeroAleatorio;
 }
 

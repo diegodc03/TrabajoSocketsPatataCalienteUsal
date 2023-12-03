@@ -208,22 +208,22 @@ char *argv[];
 
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
 		if(strcmp(buf, "220 Servicio Preparado")== 0){
-			printf("%s\n",buf);
+			printf("S: %s\n",buf);
 			aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
 		}
 		else if(strcmp(buf,"221 Cerrando el Servicio") == 0){
-			printf("%s\n",buf);
+			printf("S: %s\n",buf);
 			aniadirAlLog("cliente.txt", buf);
 			break;
 		}else{
 
 			//Respuesta del servidor
-			printf("%s\n",buf);
+			printf("S: %s\n",buf);
 			aniadirAlLog("cliente.txt", buf);
 		}
 
 		
-
+		printf("C: ");
 
 
 		//Respuesta del cliente
@@ -233,7 +233,7 @@ char *argv[];
 			buf[len-1] = '\0';
 		}
 
-		printf("%s", buf);
+		//printf("C: %s\n", buf);
 		
 		aniadirAlLog("cliente.txt", buf);
 

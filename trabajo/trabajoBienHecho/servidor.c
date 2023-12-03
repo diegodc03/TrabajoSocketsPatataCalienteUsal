@@ -44,7 +44,7 @@ extern int errno;
 
 int comprobarMensaje(char *);
 int obtenerNumero(char *);
-int aniadirAlLog(char *, char *);
+int aniadirAlLog(char *, int);
 int calcularNumeroRandom();
 void aniadirCRLF(char *, int );
 int eliminarCRLF(char *string);
@@ -323,7 +323,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 	int reqcnt = 0;		/* keeps count of number of requests */
 	char buf[TAM_BUFFER];		/* This example uses TAM_BUFFER byte messages. */
 	char hostname[MAXHOST];		/* remote host's name string */
-
+	char auxFich[TAM_BUFFER];
 	int len, len1, status;
     struct hostent *hp;		/* pointer to host info for remote host */
     long timevar;			/* contains time returned by time() */
@@ -394,10 +394,25 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 	int aux= 0;
 	int numIntentos;
 	int valorAResolver;
+	
+	//Primera cosa que se hace, añadir al log
+	if(aniadirAlLog("", 0) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+	}
 
+	sprintf(auxFich,"Startup from %s port %u at %s",
+		hostname, ntohs(clientaddr_in.sin_port), (char *) ctime(&timevar));
+
+	if(aniadirAlLog(auxFich, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+	}
+	
 
 	if (send(s, "220 Servicio Preparado\r\n", TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
-	
+	//Añadir al log	
+			if(aniadirAlLog("220 Servicio Preparado", 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 
 	while (len = recv(s, buf, TAM_BUFFER, 0)) {
 		if (len == -1) errout(hostname); /* error from recv */
@@ -459,7 +474,12 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			estamosJugando = 1;
 			mensajeHola = 1;
 
-			//aniadirCRLF(mensaje, TAM_BUFFER);
+			
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
+
 			strcat(mensaje, "\r\n");
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
 				errout(hostname);
@@ -503,10 +523,11 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 					}
 			}
 
-			//Añadir al log
-			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
+
 			aniadirCRLF(mensaje, TAM_BUFFER);
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER ) {
 				errout(hostname);
@@ -526,10 +547,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			sprintf(numStr, "%d",numIntentos);
 			strcat(mensaje, numStr);
 
-			//Añadir al log
-			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 					
 			aniadirCRLF(mensaje, TAM_BUFFER);
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
@@ -541,22 +562,34 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		else if(tipo == 4){
 			char mensaje[TAM_BUFFER];
 			strcpy(mensaje, "221 Cerrando el Servicio");
-					
-			//Añadir al log
-			//if(aniadirAlLog(SERVIDOR, mensaje) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
 
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
+			
 			aniadirCRLF(mensaje, TAM_BUFFER);
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
 				errout(hostname);
 			}
+
 			finalizacion = 1;
 			
 		}
 		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
 		else{
+			char mensaje[TAM_BUFFER];
+			strcpy(mensaje, "500 Error de sintaxis");
 
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
+
+			aniadirCRLF(mensaje, TAM_BUFFER);
+			if(send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER){
+				errout(hostname);
+			}
 		}
 
 
@@ -639,49 +672,44 @@ int obtenerNumero(char *cadena){
 	int numero = 0;
     char *token;
 
-	//strtok coge los elementos de uno en uno, es decir, si divide RESPUESTA 23,  y le decies que lo divide 
-	// por espacio, implica que strtok cogerá cla cadena hasta el proximo espacio despues de el espacio en este caso
-	// es decir, el primer token sera devuelto para RESPUESTA y luego usando strtok(NULL, "") me dara el siguiente valor del string, el numero.	
-	/*
-	token = strtok(cadena, "");
-	int contador = 0;
-
-	while(token != NULL){
-		if(contador == 1){ //La segunda parte debe estar en la posicion 1
-			numero = atoi(token);
-			break;
-		}
-		token = strtok(NULL, "");	//Obtener el siguiente token
-		contador = contador + 1;
-	}
-	return numero;
-	*/
-
-
 	if (sscanf(cadena, "RESPUESTA %d", &numero) == 1) {
         return numero;
     }
-
-
 }
 
-
-int aniadirAlLog(char *nombreFichero, char *cadena){
+//Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
+int aniadirAlLog( char *cadena, int valor){
 	
 	FILE *Fich;
-	strcat(nombreFichero,".txt");
-	if((Fich = fopen(nombreFichero, "a")) == NULL){
+	long timevar;
+	time_t t = time(&timevar);
+	struct tm* ltime = localtime(&t);
+
+	int hora = ltime->tm_hour;
+	int minutos = ltime->tm_min;
+	int segundos = ltime->tm_sec;
+
+
+	if((Fich = fopen("peticiones.log", "a")) == NULL){
 		//Fichero corrompido
 		return -1;
 	}
 	
-	//Fichero abierto correctamente
-	fprintf(Fich,"%s",cadena);
+	
+	//Añadios el mensaje, pero el primer mensaje solo es la hora
+	if(valor == 1){
+		fprintf(Fich, "HORA: %02d:%02d:%02d | \t", hora, minutos, segundos);
+		fprintf(Fich, "RESPUESTA SERVIDOR: %s\n", cadena);
+	} else{
+		fprintf(Fich, "FECHA Y HORA DEL COMIENZO:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
+	}
+				
+
+	
 
 	fclose(Fich);
 	return 0;
 }
-
 
 
 

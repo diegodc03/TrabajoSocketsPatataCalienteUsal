@@ -1,0 +1,59 @@
+
+#ifndef __FUNCIONES__
+#define __FUNCIONES__
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+//Declaracion de variables
+
+#define PUERTO 43687
+#define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
+#define BUFFERSIZE	516	/* maximum size of packets to be received */
+#define TAM_BUFFER 516
+#define MAXHOST 128
+#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
+#define LF '\n'
+#define TC '\0'		//Terminacion de Cadena
+
+
+#define CLIENTE "cliente"
+#define SERVIDOR "servidor"
+#define HOLA "HOLA"
+#define RESPUESTA "RESPUESTA"
+#define SIGNOSUMA "+"
+#define ADIOS "ADIOS"
+
+
+extern int errno;
+
+
+//Struct
+
+typedef struct{
+	char mensaje[TAM_BUFFER];
+	int numero;
+}Msj;
+
+
+typedef struct{
+	int num;
+	char cadena[BUFFERSIZE];
+}respuestasServidor;
+
+
+
+
+//Funciones
+int eliminarCRLF(char *);
+void aniadirCRLF(char *, int );
+int comprobarMensaje(char *)
+int obtenerNumero(char *);
+int calcularNumeroRandom();
+int aniadirAlLog(char *, char*);
+void dividirCadena(char *, int *, char *);
+
+
+#endif // !__FUNCIONES__

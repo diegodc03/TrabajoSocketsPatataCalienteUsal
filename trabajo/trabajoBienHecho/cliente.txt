@@ -2,191 +2,55 @@
 
 HOLA
 250 Adivina el valor entre 0 y 100#5
-ADIOS
-221 Cerrando el Servicio
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-ADIOS
-221 Cerrando el Servicio
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 20
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 24
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 24
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 24
-354 MAYOR#4
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 20
-354 MAYOR#4
-RESPUESTA 80
-354 MAYOR#3
-RESPUESTA 100
-354 MAYOR#2
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 25
-354 MAYOR#4
-RESPUESTA 100
-354 MAYOR#3
-220 Servicio Preparado
-
-023
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 20
-354 MAYOR#4
-RESPUESTA 88
-354 MAYOR#3
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 15
-354 MAYOR#4
-SALIR
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 20
-350 ACIERTO#4
-ADIOS
-221 Cerrando el Servicio
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 26
-354 MAYOR#4
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 1
-354 MAYOR#4
-
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-SPUESTA
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
 RESPUESTA 5
 354 MAYOR#4
-RESPUESTA 9
-354 MAYOR#3
 RESPUESTA 10
-354 MAYOR#2
-RESPUESTA 1
-354 MAYOR#1
-RESPUESTA 100
-354 MAYOR#0
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 2
-350 ACIERTO#4
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 10
-354 MAYOR#4
-RESPUESTA 1
-354 MAYOR#3
-RESPUESTA 5
-354 MAYOR#2
-RESPUESTA 1
-354 MAYOR#1
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
+354 MENOR#3
 RESPUESTA 8
-354 MAYOR#4
-RESPUESTA 6
-354 MAYOR#3
-220 Servicio Preparado
-
-HOLA
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 6
-354 MAYOR#4
-RESPUESTA 5
-354 MAYOR#3
+354 MAYOR#2
 RESPUESTA 9
-354 MENOR#2
-RESPUESTA 8
 350 ACIERTO#1
-220 Servicio Preparado
-
-HOLA
++
 250 Adivina el valor entre 0 y 100#5
+RESPUESTA 7
+350 ACIERTO#4
 RESPUESTA 10
-354 MENOR#4
-RESPUESTA 5
-354 MENOR#3
+500 Error de sintaxis
++
+250 Adivina el valor entre 0 y 100#5
 RESPUESTA 3
-354 MENOR#2
-RESPUESTA1
-354 MENOR#1
-RESPUESTA 0
-375 FALLO
+350 ACIERTO#4
+HOLA
+500 Error de sintaxis
 ADIOS
 221 Cerrando el Servicio
 220 Servicio Preparado
 
 HOLA
 250 Adivina el valor entre 0 y 100#5
-RESPUESTA 2
-354 MAYOR#4
-RESPUESTA 4
-354 MENOR#3
-RESPUESTA 3
-350 ACIERTO#2
-+
-250 Adivina el valor entre 0 y 100#5
-RESPUESTA 0
 220 Servicio Preparado
 
 HOLA
 250 Adivina el valor entre 0 y 100#5
-RESPUESTA 9
+RESPUESTA 1
 354 MENOR#4
-RESPUESTA 7
-354 MAYOR#3
-RESPUESTA 8
-350 ACIERTO#2
+RESPUESTA 0
+350 ACIERTO#3
 +
 250 Adivina el valor entre 0 y 100#5
-RESPUESTA 3
+RESPUESTA 7
+350 ACIERTO#4
+ADIOS
+221 Cerrando el Servicio
+220 Servicio Preparado
+
+HOLA
+250 Adivina el valor entre 0 y 100#5
+220 Servicio Preparado
+
+HOLA
+250 Adivina el valor entre 0 y 100#5
+RESPUESTA 8
 350 ACIERTO#4
 ADIOS
 221 Cerrando el Servicio

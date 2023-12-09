@@ -139,6 +139,7 @@ char *argv[];
 	
 	
 	/* Create the socket UDP. */
+
 	s_UDP = socket (AF_INET, SOCK_DGRAM, 0);
 	if (s_UDP == -1) {
 		perror(argv[0]);
@@ -272,13 +273,16 @@ char *argv[];
                 * room is left at the end of the buffer
                 * for a null character.
                 */
+				//Este rcvFrom es para esperar al proceso Cliente, por decirlo asi
+				//actua como accept en TCP
                 cc = recvfrom(s_UDP, buffer, BUFFERSIZE - 1, 0,
                    (struct sockaddr *)&clientaddr_in, &addrlen);
                 if ( cc == -1) {
                     perror(argv[0]);
                     printf("%s: recvfrom error\n", argv[0]);
                     exit (1);
-                    }
+                }
+				//Si llega a este momento salta a la función serverUDP que hara los mensajes
                 /* Make sure the message received is
                 * null terminated.
                 */
@@ -455,6 +459,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		//Comprobamos si es tipo = 2, ya que tendria una respuesta y son dos mensjes a tener
 		if(tipo == 2){
 			numero = obtenerNumero(buf);
+			printf("numero %d",numero);
+			if(numero <= -1){
+				tipo = 5;
+			}
 		}
 
 
@@ -464,7 +472,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		//HOLA
 		if(tipo == 1 && mensajeHola == 0){
 			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
-			numIntentos = 5;
+			numIntentos = 4;
 			char numStr[10];
 			char mensaje[TAM_BUFFER];
 
@@ -578,6 +586,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 		}
 		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
 		else{
+			
 			char mensaje[TAM_BUFFER];
 			strcpy(mensaje, "500 Error de sintaxis");
 
@@ -674,7 +683,10 @@ int obtenerNumero(char *cadena){
 
 	if (sscanf(cadena, "RESPUESTA %d", &numero) == 1) {
         return numero;
-    }
+    }else{
+		return -1;
+	}
+
 }
 
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
@@ -793,17 +805,19 @@ void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in)
     struct in_addr reqaddr;	/* for requested host's address */
     struct hostent *hp;		/* pointer to host info for requested host */
     int nc, errcode;
-
+	int status;
     struct addrinfo hints, *res;
-
+	char hostname[MAXHOST];	
 	int addrlen;
+	long timevar;
     
    	addrlen = sizeof(struct sockaddr_in);
 
-      memset (&hints, 0, sizeof (hints));
-      hints.ai_family = AF_INET;
+    memset (&hints, 0, sizeof (hints));
+    hints.ai_family = AF_INET;
 		/* Treat the message as a string containing a hostname. */
 	    /* Esta funci�n es la recomendada para la compatibilidad con IPv6 gethostbyname queda obsoleta. */
+
     errcode = getaddrinfo (buffer, NULL, &hints, &res); 
     if (errcode != 0){
 		/* Name was not found.  Return a
@@ -816,7 +830,25 @@ void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in)
 	}
      freeaddrinfo(res);
 
-	nc = sendto (s, &reqaddr, sizeof(struct in_addr),
+
+	status = getnameinfo((struct sockaddr *)&clientaddr_in,sizeof(clientaddr_in), hostname, MAXHOST,NULL,0,0);
+	if(status){
+		/* The information is unavailable for the remote
+			 * host.  Just format its internet address to be
+			 * printed out in the logging information.  The
+			 * address will be shown in "internet dot format".
+			 */
+		 /* inet_ntop para interoperatividad con IPv6 */
+		if (inet_ntop(AF_INET, &(clientaddr_in.sin_addr), hostname, MAXHOST) == NULL)
+			perror(" inet_ntop \n");
+	}
+
+	time (&timevar);
+
+	
+
+
+	nc = sendto (s, "Servicio Preparado\r\n", sizeof(struct in_addr),
 			0, (struct sockaddr *)&clientaddr_in, addrlen);
 	if ( nc == -1) {
          perror("serverUDP");

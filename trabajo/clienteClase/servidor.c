@@ -19,14 +19,27 @@
 #include <unistd.h>
 
 
+
+#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
+#define LF '\n'
+#define TC '\0'		//Terminacion de Cadena
+
+
 			
-#define PUERTO 43687 				//17278
+#define PUERTO 17278
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
-#define BUFFERSIZE	1024	/* maximum size of packets to be received */
+#define BUFFERSIZE	516	/* maximum size of packets to be received */
 #define TAM_BUFFER 10
 #define MAXHOST 128
 
 extern int errno;
+
+int comprobarMensaje(char *);
+int obtenerNumero(char *);
+int aniadirAlLog(char *, int);
+int calcularNumeroRandom();
+void aniadirCRLF(char *, int );
+int eliminarCRLF(char *string);
 
 /*
  *			M A I N
@@ -39,7 +52,7 @@ extern int errno;
  */
  
 void serverTCP(int s, struct sockaddr_in peeraddr_in);
-void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in);
+void serverUDP(int s, struct sockaddr_in clientaddr_in);
 void errout(char *);		/* declare error out routine */
 
 int FIN = 0;             /* Para el cierre ordenado */
@@ -51,7 +64,7 @@ char *argv[];
 {
 
     int s_TCP, s_UDP;		/* connected socket descriptor */
-    int ls_TCP;				/* listen socket descriptor */
+    int ls_TCP, ls_UDP;				/* listen socket descriptor */
     
     int cc;				    /* contains the number of bytes read */
      
@@ -93,6 +106,7 @@ char *argv[];
 		 * practice, because it makes the server program more
 		 * portable.
 		 */
+	//myaddr_in.sin_port = 0;
 	myaddr_in.sin_addr.s_addr = INADDR_ANY;
 	myaddr_in.sin_port = htons(PUERTO);
 
@@ -113,19 +127,29 @@ char *argv[];
 	}
 	
 	
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	/* Create the socket UDP. */
-	s_UDP = socket (AF_INET, SOCK_DGRAM, 0);
-	if (s_UDP == -1) {
+	ls_UDP = socket (AF_INET, SOCK_DGRAM, 0);
+	if (ls_UDP == -1) {
 		perror(argv[0]);
 		printf("%s: unable to create socket UDP\n", argv[0]);
 		exit(1);
 	   }
 	/* Bind the server's address to the socket. */
-	if (bind(s_UDP, (struct sockaddr *) &myaddr_in, sizeof(struct sockaddr_in)) == -1) {
+	if (bind(ls_UDP, (struct sockaddr *) &myaddr_in, sizeof(struct sockaddr_in)) == -1) {
 		perror(argv[0]);
 		printf("%s: unable to bind address UDP\n", argv[0]);
 		exit(1);
 	    }
+
+
 
 		/* Now, all the initialization of the server is
 		 * complete, and any user errors will have already
@@ -144,7 +168,7 @@ char *argv[];
 	switch (fork()) {
 	case -1:		/* Unable to fork, for some reason. */
 		perror(argv[0]);
-		fprintf(stderr, "%s: unable to fork daemon\n", argv[0]);
+		printf("%s: unable to fork daemon\n", argv[0]);
 		exit(1);
 
 	case 0:     /* The child process (daemon) comes here. */
@@ -184,19 +208,19 @@ char *argv[];
             /* Meter en el conjunto de sockets los sockets UDP y TCP */
             FD_ZERO(&readmask);
             FD_SET(ls_TCP, &readmask);
-            FD_SET(s_UDP, &readmask);
+            FD_SET(ls_UDP, &readmask);
             /* 
             Seleccionar el descriptor del socket que ha cambiado. Deja una marca en 
             el conjunto de sockets (readmask)
             */ 
-    	    if (ls_TCP > s_UDP) s_mayor=ls_TCP;
-    		else s_mayor=s_UDP;
+    	    if (ls_TCP > ls_UDP) s_mayor=ls_TCP;
+    		else s_mayor=ls_UDP;
 
             if ( (numfds = select(s_mayor+1, &readmask, (fd_set *)0, (fd_set *)0, NULL)) < 0) {
                 if (errno == EINTR) {
                     FIN=1;
 		            close (ls_TCP);
-		            close (s_UDP);
+		            close (ls_UDP);
                     perror("\nFinalizando el servidor. Se�al recibida en elect\n "); 
                 }
             }
@@ -214,16 +238,18 @@ char *argv[];
     				 * peer, and a new socket descriptor, s,
     				 * for that connection.
     				 */
-    			s_TCP = accept(ls_TCP, (struct sockaddr *) &clientaddr_in, &addrlen);
-    			if (s_TCP == -1) exit(1);
-    			switch (fork()) {
-        			case -1:	/* Can't fork, just exit. */
-        				exit(1);
-        			case 0:		/* Child process comes here. */
-                    			close(ls_TCP); /* Close the listen socket inherited from the daemon. */
-        				serverTCP(s_TCP, clientaddr_in);
-        				exit(0);
-        			default:	/* Daemon process comes here. */
+    				s_TCP = accept(ls_TCP, (struct sockaddr *) &clientaddr_in, &addrlen);
+    				if (s_TCP == -1) 
+						exit(1);
+    			
+					switch (fork()) {
+        				case -1:	/* Can't fork, just exit. */
+        					exit(1);
+        				case 0:		/* Child process comes here. */
+                			close(ls_TCP); /* Close the listen socket inherited from the daemon. */
+        					serverTCP(s_TCP, clientaddr_in);
+        					exit(0);
+        				default:	/* Daemon process comes here. */
         					/* The daemon needs to remember
         					 * to close the new accept socket
         					 * after forking the child.  This
@@ -234,34 +260,130 @@ char *argv[];
         					 * allow the socket to be destroyed
         					 * since it will be the last close.
         					 */
-        				close(s_TCP);
+        					close(s_TCP);
         			}
-             } /* De TCP*/
-          /* Comprobamos si el socket seleccionado es el socket UDP */
-          if (FD_ISSET(s_UDP, &readmask)) {
-                /* This call will block until a new
-                * request arrives.  Then, it will
-                * return the address of the client,
-                * and a buffer containing its request.
-                * BUFFERSIZE - 1 bytes are read so that
-                * room is left at the end of the buffer
-                * for a null character.
-                */
-                cc = recvfrom(s_UDP, buffer, BUFFERSIZE - 1, 0,
-                   (struct sockaddr *)&clientaddr_in, &addrlen);
-                if ( cc == -1) {
-                    perror(argv[0]);
-                    printf("%s: recvfrom error\n", argv[0]);
-                    exit (1);
-                    }
-                /* Make sure the message received is
-                * null terminated.
-                */
-                buffer[cc]='\0';
-                serverUDP (s_UDP, buffer, clientaddr_in);
+             	} /* De TCP*/
+
+          
+		  
+		  		/* Comprobamos si el socket seleccionado es el socket UDP */
+          		if (FD_ISSET(ls_UDP, &readmask)) {
+
+                	/* This call will block until a new
+                	* request arrives.  Then, it will
+                	* return the address of the client,
+                	* and a buffer containing its request.
+                	* BUFFERSIZE - 1 bytes are read so that
+                	* room is left at the end of the buffer
+                	*	 for a null character.
+                	*/
+					
+
+    			
+				
+                	cc = recvfrom(ls_UDP, buffer, BUFFERSIZE, 0,
+                   		(struct sockaddr *)&clientaddr_in, &addrlen);
+                	if ( cc == -1) {
+                    	perror(argv[0]);
+                    	printf("%s: recvfrom error\n", argv[0]);
+                    	exit (1);
+                    	}
+
+
+					///////////////////////////////////////////
+					FILE *file;
+					// Abre un archivo para escritura
+    				file = fopen("salida.txt", "w");
+    				if (file == NULL) {
+        			perror("Error al abrir el archivo");
+        			return 1;
+    				}
+
+    				// Escribe en el archivo
+    				fprintf(file, "Estoy despues de leer y deberia recoger, %s.\n",buffer);
+
+    				// Cierra el archivo
+    				fclose(file);
+					////////////////////////////////////
+				
+
+
+					/* When a new client sends a UDP datagram, his information is stored
+					* in "clientaddr_in", so we can create a false connection by sending messages
+					* manually with this information
+					*/
+					s_UDP = socket(AF_INET, SOCK_DGRAM, 0);
+					if (s_UDP == -1) {
+						perror(argv[0]);
+						printf("%s: unable to create new socket UDP for new client\n", argv[0]);
+						exit(1);
+					}
+
+					/* Clear and set up address structure for new socket. 
+					* Port 0 is specified to get any of the avaible ones, as well as the IP address.
+					*/						
+					memset ((char *)&myaddr_in, 0, sizeof(struct sockaddr_in));
+					myaddr_in.sin_family = AF_INET;
+					myaddr_in.sin_addr.s_addr = INADDR_ANY;
+					myaddr_in.sin_port = htons(0);
+						
+					/* Bind the server's address to the new socket for the client. */
+					if (bind(s_UDP, (struct sockaddr *) &myaddr_in, sizeof(struct sockaddr_in)) == -1) {
+						perror(argv[0]);
+						printf("%s: unable to bind address new socket UDP for new client\n", argv[0]);
+						exit(1);
+					}
+
+					/* As well as its done in TCP, a new thread is created for that false connection */
+					switch (fork()) {
+						case -1:	
+							exit(1);
+							
+						case 0:		/* Child process comes here. */
+									/* Child doesnt need the listening socket */
+				    		close(ls_UDP); 
+				    			
+				    		/* Sends a message to the client for him to know the new port for 
+							 * the false connection
+				    		 */
+				    		/*
+							if (sendto(s_UDP, "Servicio Preparado\r\n", BUFFERSIZE, 0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+								perror(argv[0]);
+								fprintf(stderr, "%s: unable to send request to \"connect\" \n", argv[0]);
+								exit(1);
+							}*/
+
+							//Registers info of the new UDP "false connection"
+							//if(-1 == addNewConexionToLog(myaddr_in, clientaddr_in, "UDP")){
+							//	perror("No se ha podido a�adir la connection a nntpd.log");
+							//}	
+								
+							//Starts up the server									
+							serverUDP(s_UDP, clientaddr_in);
+							exit(0);
+							
+						default:
+					
+
+							close(s_UDP);
+						}
+
+
+
+
+
+                	/* Make sure the message received is
+                	* null terminated.
+                	*/
+                	//buffer[cc]='\0';
+                	//serverUDP (s_UDP, buffer, clientaddr_in);
                 }
-          }
-		}   /* Fin del bucle infinito de atenci�n a clientes */
+          	}
+		}   
+		
+		
+		//ENTENDEMOS QUE EL SERVER UDP, cuando termina llega aqui
+		/* Fin del bucle infinito de atenci�n a clientes */
         /* Cerramos los sockets UDP y TCP */
         close(ls_TCP);
         close(s_UDP);
@@ -275,8 +397,38 @@ char *argv[];
 }
 
 
+/*
+// Abre un archivo para escritura
+    			file = fopen("salida.txt", "w");
+    			if (file == NULL) {
+        		perror("Error al abrir el archivo");
+        		return 1;
+    			}
 
+    			// Escribe en el archivo
+    			fprintf(file, "eSTOY ANTES DE LLEER.\n");
+
+    			// Cierra el archivo
+    			fclose(file);
+		
+				
+*/
 //////////////////////////////// FIN DE MAIN ////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -452,39 +604,250 @@ void errout(char *hostname)
  *	logging information to stdout.
  *
  */
-void serverUDP(int s, char * buffer, struct sockaddr_in clientaddr_in)
+void serverUDP(int s, struct sockaddr_in clientaddr_in)
 {
     struct in_addr reqaddr;	/* for requested host's address */
     struct hostent *hp;		/* pointer to host info for requested host */
     int nc, errcode;
-
+	char buf[BUFFERSIZE];
     struct addrinfo hints, *res;
-
+	int cc;
 	int addrlen;
-    
+	int status;
+    char hostname[MAXHOST];
    	addrlen = sizeof(struct sockaddr_in);
 
-      memset (&hints, 0, sizeof (hints));
-      hints.ai_family = AF_INET;
-		/* Treat the message as a string containing a hostname. */
-	    /* Esta funci�n es la recomendada para la compatibilidad con IPv6 gethostbyname queda obsoleta. */
-    errcode = getaddrinfo (buffer, NULL, &hints, &res); 
-    if (errcode != 0){
-		/* Name was not found.  Return a
-		 * special value signifying the error. */
-		reqaddr.s_addr = ADDRNOTFOUND;
-      }
-    else {
-		/* Copy address of host into the return buffer. */
-		reqaddr = ((struct sockaddr_in *) res->ai_addr)->sin_addr;
-	}
-     freeaddrinfo(res);
 
-	nc = sendto (s, &reqaddr, sizeof(struct in_addr),
-			0, (struct sockaddr *)&clientaddr_in, addrlen);
-	if ( nc == -1) {
-         perror("serverUDP");
-         printf("%s: sendto error\n", "serverUDP");
-         return;
-         }   
+	//Declaraciones para hacer la funcionalidad
+	int tipo;
+	int estamosJugando = 0;
+	int mensajeHola = 0;
+	int valorAResolver = 0;	
+	int aux;
+	int numero;
+	int numIntentos;
+
+	status = getnameinfo((struct sockaddr *)&clientaddr_in,sizeof(clientaddr_in), hostname, MAXHOST,NULL,0,0);
+	if(status){
+		/* The information is unavailable for the remote
+			 * host.  Just format its internet address to be
+			 * printed out in the logging information.  The
+			 * address will be shown in "internet dot format".
+			 */
+		 /* inet_ntop para interoperatividad con IPv6 */
+		if (inet_ntop(AF_INET, &(clientaddr_in.sin_addr), hostname, MAXHOST) == NULL)
+			perror(" inet_ntop \n");
+	}
+
+
+	//Enviamos Primer mensaje al cliente
+	if ( nc = sendto (s, "Servicio Preparado\r\n", BUFFERSIZE,
+			0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+        perror("serverUDP");
+        printf("%s: sendto error\n", "serverUDP");
+        return;
+    }
+	
+	while(1){
+		
+		//Recibe la respuesta y despues el servidor hace lo necesario
+		cc = recvfrom(s, buf, BUFFERSIZE, 0,
+                   		(struct sockaddr *)&clientaddr_in, &addrlen);
+    	if ( cc == -1) {
+        
+        	printf(": recvfrom error\n");
+        	exit (1);
+        }
+
+
+
+		sleep(2);
+
+		//Se elimina \r\n
+		aux = eliminarCRLF(buf);
+		
+
+
+		//Empezamos funcionalidad del programa
+		tipo = comprobarMensaje(buf);
+		//printf("\n%d\n",tipo);
+		
+		//Comprobamos si es tipo = 2, ya que tendria una respuesta y son dos mensjes a tener
+		if(tipo == 2){
+			numero = obtenerNumero(buf);
+			printf("numero %d",numero);
+			if(numero <= -1){
+				tipo = 5;
+			}
+		}
+
+
+
+		//DEPENDIENDO EL CLIENTE, SE DEVOLVERÁ UNA COSA U OTRA
+
+		//HOLA
+		if(tipo == 1 && mensajeHola == 0){
+			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+			numIntentos = 4;
+			char numStr[10];
+			char mensaje[BUFFERSIZE];
+
+			strcpy(mensaje,"250 Adivina el valor entre 0 y 100#");
+			sprintf(numStr, "%d",numIntentos);
+			strcat(mensaje, numStr);
+			estamosJugando = 1;
+			mensajeHola = 1;
+
+			/*
+			//Añadir al log		
+			if(aniadirAlLog(mensaje, 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}*/
+
+			strcat(mensaje, "\r\n");
+			if ( nc = sendto (s, mensaje, BUFFERSIZE,
+				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+         		perror("serverUDP");
+         		printf("%s: sendto error\n", "serverUDP");
+         		return;
+         	}
+		}
+
+
+
+
+
+
+
+		
+	}
+	   
  }
+
+
+int comprobarMensaje(char *cadena){
+	//Hay un mensaje que tiene dos partes, implica que quiero saber las dos
+	int i=0;
+	
+	/*
+	char token[TAM_BUFFER];
+	token = strtok(cadena, "");
+	if(strncmp(token, "RESPUESTA") == 0){
+		return 2;
+	}*/
+
+	if(strcmp(cadena, "HOLA") == 0){
+		return 1;
+	}else if(strncmp(cadena, "RESPUESTA", 8) == 0){
+		return 2;
+	}else if(strcmp(cadena, "+") == 0){
+		return 3;
+	}else if(strcmp(cadena, "ADIOS") == 0){
+		return 4;
+	}
+	return 5;
+}
+
+
+int obtenerNumero(char *cadena){
+
+	int numero = 0;
+    char *token;
+
+	if (sscanf(cadena, "RESPUESTA %d", &numero) == 1) {
+        return numero;
+    }else{
+		return -1;
+	}
+
+}
+
+//Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
+int aniadirAlLog( char *cadena, int valor){
+	
+	FILE *Fich;
+	long timevar;
+	time_t t = time(&timevar);
+	struct tm* ltime = localtime(&t);
+
+	int hora = ltime->tm_hour;
+	int minutos = ltime->tm_min;
+	int segundos = ltime->tm_sec;
+
+
+	if((Fich = fopen("peticiones.log", "a")) == NULL){
+		//Fichero corrompido
+		return -1;
+	}
+	
+	
+	//Añadios el mensaje, pero el primer mensaje solo es la hora
+	if(valor == 1){
+		fprintf(Fich, "HORA: %02d:%02d:%02d | \t", hora, minutos, segundos);
+		fprintf(Fich, "RESPUESTA SERVIDOR: %s\n", cadena);
+	} else{
+		fprintf(Fich, "FECHA Y HORA DEL COMIENZO:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
+	}
+				
+
+	
+
+	fclose(Fich);
+	return 0;
+}
+
+
+
+int calcularNumeroRandom(){
+	int numMax = 10;
+	int numMin = 0;
+	srand((unsigned int)time(NULL));
+	 // Calcular el rango del número aleatorio
+    int rango = numMax - numMin + 1;
+
+    // Generar el número aleatorio y ajustarlo al rango
+    int numeroAleatorio = rand() % rango + numMin;
+	printf("\t%d\n", numeroAleatorio);
+	return numeroAleatorio;
+}
+
+void aniadirCRLF(char *string, int tamanioBuffer){
+	int tamanio;
+
+
+	tamanio = strlen(string);
+
+	if(tamanio >= tamanioBuffer-2){
+		string[tamanioBuffer-2] = CR;
+		string[tamanioBuffer-1] = LF;
+	}else{
+		string[tamanio] = CR;
+		string[tamanio + 1] = LF;
+	}
+    
+}
+
+
+
+//Eliminamos de string CR-LF
+int eliminarCRLF(char *string){
+
+	int i=0;
+	//Bucle infinito ya que retornaremos un valor, y luego como se pasa por refrencia la cadena no hay que retornarña
+	while(1){
+		if(string[i]== CR && string[i+1] == LF){
+			string[i] = TC;
+			return 0;
+		}
+		if (i==BUFFERSIZE-2){
+			return 1;
+		}
+	
+		i++;
+	}
+
+
+
+
+}
+

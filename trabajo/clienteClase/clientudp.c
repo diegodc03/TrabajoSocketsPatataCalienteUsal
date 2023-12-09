@@ -16,8 +16,6 @@
  *	the host name.
  *
  */
- 
- //hhff
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/errno.h>
@@ -29,16 +27,24 @@
 #include <netdb.h>
 #include <string.h>
 #include <time.h>
+
 #include <unistd.h>
 
 extern int errno;
 
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
 #define RETRIES	5		/* number of times to retry before givin up */
-#define BUFFERSIZE	1024	/* maximum size of packets to be received */
-#define PUERTO 43687 
+#define BUFFERSIZE	516	/* maximum size of packets to be received */
+#define PUERTO 17278
 #define TIMEOUT 6
 #define MAXHOST 512
+
+#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
+#define LF '\n'
+#define TC '\0'		//Terminacion de Cadena
+
+int recibir(int , char *, int , struct sockaddr* , int *);
+
 /*
  *			H A N D L E R
  *
@@ -161,54 +167,143 @@ char *argv[];
             exit(1);
         }
 	
-    n_retry=RETRIES;
-    
-	while (n_retry > 0) {
+	char buffer[BUFFERSIZE];
+	//Comprobar que la cosa va bien xd
+	/* Send a "false connection" message to the UDP server listening socket (ls_UDP) */
+	//Es el envio que sirve para establecer la conexión, es decir, es que provoca que se conecte
+	if (sendto (s, "", BUFFERSIZE,0, (struct sockaddr *)&servaddr_in, addrlen) == -1) {
+		perror(argv[0]);
+		fprintf(stderr, "%s: unable to send request to \"connect\" \n", argv[0]);
+		exit(1);
+	}	
+
+	/* Waits for the response of the server with the new socket it has to talk to */
+	/*
+	if(-1 == recvfrom(s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen)){
+		
+		exit(1);
+	}
+	printf("Address for %s is %s\n", argv[2], hostname) ;
+
+	printf("S: %s",buffer);
+	*/
+	int ret;
+
+	while(1){
+		printf("ESTOY EN EL WHILE INFINITO\n");
+		
+		ret = recibir(s, buffer, BUFFERSIZE, &servaddr_in, &addrlen);
+		
+		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
+		if(strcmp(buffer, "220 Servicio Preparado")== 0){
+			printf("S: %s\n",buffer);
+			//aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
+		}
+
+
+
+
+		//Respuesta del cliente
+		fgets(buffer, BUFFERSIZE-2, stdin);
+		int len = strlen(buffer);
+		if(len > 0 && buffer[len-1] == '\n'){
+			buffer[len-1] = '\0';
+		}
+
+		strcat(buffer,"\r\n");
 		/* Send the request to the nameserver. */
-        if (sendto (s, argv[2], strlen(argv[2]), 0, (struct sockaddr *)&servaddr_in,
+        if (sendto (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in,
 				sizeof(struct sockaddr_in)) == -1) {
         		perror(argv[0]);
         		fprintf(stderr, "%s: unable to send request\n", argv[0]);
         		exit(1);
         	}
+	
+
+
+		//Esto es como si fuese la funcion y no va
+    	
+		
+    
+
+
+	}	
+	
+		
+}
+
+
+
+
+int eliminarCRLF(char *string){
+	int i=0;
+	
+	//Bucle infinito ya que retornaremos un valor, y luego como se pasa por refrencia la cadena no hay que retornarña
+	while(1){
+		if(string[i]== CR && string[i+1] == LF){
+			string[i] = TC;
+			return 0;
+		}
+		if (i==BUFFERSIZE-2){
+			return 1;
+		}
+	
+		i++;
+	}
+}
+
+
+
+int recibir(int s, char *buffer, int size, struct sockaddr *servaddr_in, int *addrlen){
+	int n_retry;
+	n_retry=RETRIES;
+	while (n_retry > 0) {
+		//RESET(buffer, BUFFERSIZE);		
 		/* Set up a timeout so I don't hang in case the packet
 		 * gets lost.  After all, UDP does not guarantee
 		 * delivery.
 		 */
 	    alarm(TIMEOUT);
+		
 		/* Wait for the reply to come in. */
-        if (recvfrom (s, &reqaddr, sizeof(struct in_addr), 0,
-						(struct sockaddr *)&servaddr_in, &addrlen) == -1) {
+		
+        if (recvfrom (s, buffer, size, 0,
+			(struct sockaddr *)servaddr_in, addrlen) == -1) {
     		if (errno == EINTR) {
-    				/* Alarm went off and aborted the receive.
-    				 * Need to retry the request if we have
-    				 * not already exceeded the retry limit.
-    				 */
- 		         printf("attempt %d (retries %d).\n", n_retry, RETRIES);
-  	 		     n_retry--; 
+    			/* Alarm went off and aborted the receive.
+    			 * Need to retry the request if we have
+    			 * not already exceeded the retry limit.
+    			 */
+ 			    printf("attempt %d (retries %d).\n", n_retry, RETRIES);
+  	 		    printf("No le llega");
+				n_retry--; 
                     } 
             else  {
 				printf("Unable to get response from");
 				exit(1); 
                 }
-              } 
+        } 
         else {
             alarm(0);
             /* Print out response. */
-            if (reqaddr.s_addr == ADDRNOTFOUND) 
-               printf("Host %s unknown by nameserver %s\n", argv[2], argv[1]);
-            else {
-                /* inet_ntop para interoperatividad con IPv6 */
-                if (inet_ntop(AF_INET, &reqaddr, hostname, MAXHOST) == NULL)
-                   perror(" inet_ntop \n");
-                printf("Address for %s is %s\n", argv[2], hostname);
-                }	
-            break;	
+            	//if (reqaddr.s_addr == ADDRNOTFOUND) 
+            	   //printf("Host %s unknown by nameserver %s\n", argv[2], argv[1]);
+            	//else {
+            	    /* inet_ntop para interoperatividad con IPv6 */
+            	//    if (inet_ntop(AF_INET, &reqaddr, hostname, MAXHOST) == NULL)
+            	//       perror(" inet_ntop \n");
+                
+			printf("%s",buffer);
+			break;
             }
-  }
+  
+		
+    }	
+	if (n_retry == 0) {
+       	printf("Unable to get response from");
+       	
+		return -1;
+    }
+	return 0;
 
-    if (n_retry == 0) {
-       printf("Unable to get response from");
-       printf(" %s after %d attempts.\n", argv[1], RETRIES);
-       }
 }

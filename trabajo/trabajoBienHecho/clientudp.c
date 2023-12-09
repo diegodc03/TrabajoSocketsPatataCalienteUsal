@@ -1,4 +1,4 @@
-/*
+ /*
  *			C L I E N T U D P
  *
  *	This is an example program that demonstrates the use of
@@ -36,9 +36,15 @@ extern int errno;
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
 #define RETRIES	5		/* number of times to retry before givin up */
 #define BUFFERSIZE	1024	/* maximum size of packets to be received */
+#define TAM_BUFFER 516
 #define PUERTO 43687 
 #define TIMEOUT 6
 #define MAXHOST 512
+
+//FUNCTIONS
+int recvUDP(int , char* , int , struct sockaddr_in* , int *);
+
+
 /*
  *			H A N D L E R
  *
@@ -48,6 +54,49 @@ void handler()
 {
  printf("Alarma recibida \n");
 }
+/*
+AL RECV LE LLEGA:
+	- int s
+	- los datos
+	- tamaño de los datos --> TAM MAXIMO
+	- servaddr_in guarda la informacion del emisor, sirviendo para luego enviar las respuestas
+	- tamdir, el tamaño de la direccion del servidor
+*/
+
+int recvUDP(int s, char* respuesta, int sizeResp, struct sockaddr_in *servaddr_in, int *addrlen){
+	
+	int n_retry;
+	n_retry = RETRIES;
+	while(n_retry > 0){
+		alarm(TIMEOUT);
+		if (recvfrom (s, respuesta, sizeResp, 0,(struct sockaddr *) servaddr_in, addrlen) == -1) {
+    		if (errno == EINTR) {
+    				/* Alarm went off and aborted the receive.
+    				 * Need to retry the request if we have
+    				 * not already exceeded the retry limit.
+    				 */
+ 		         printf("attempt %d (retries %d).\n", n_retry, RETRIES);
+  	 		     n_retry--; 
+            }else{
+				printf("Unable to get response from");
+				exit(1); 
+            }
+    	}else {
+			//Ha recibido bien
+        	alarm(0);	
+        	break;	
+    	}
+	}
+	if(n_retry == 0){
+		printf("Unable to get response from");
+    	printf("  after %d attempts.\n", RETRIES);
+       	return -1;
+	}
+	return 0;
+}
+
+
+
 
 /*
  *			M A I N
@@ -74,6 +123,8 @@ char *argv[];
     struct sockaddr_in myaddr_in;	/* for local socket address */
     struct sockaddr_in servaddr_in;	/* for server socket address */
     struct in_addr reqaddr;		/* for returned internet address */
+	
+	char tmp[TAM_BUFFER];
     int	addrlen, n_retry;
     struct sigaction vec;
    	char hostname[MAXHOST];
@@ -111,6 +162,10 @@ char *argv[];
 		fprintf(stderr, "%s: unable to bind socket\n", argv[0]);
 		exit(1);
 	   }
+
+
+	// Lo que consigo con el getsockName es saber el puerto que me ha asignado el sistema automaticamente
+	// Me lo asinga automaticamente por que he usado myaddr_in.sin_addr.s_addr = INADDR_ANY;
     addrlen = sizeof(struct sockaddr_in);
     if (getsockname(s, (struct sockaddr *)&myaddr_in, &addrlen) == -1) {
             perror(argv[0]);
@@ -128,14 +183,19 @@ char *argv[];
              */
     printf("Connected to %s on port %u at %s", argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
+
 	/* Set up the server address. */
 	servaddr_in.sin_family = AF_INET;
+
+
 		/* Get the host information for the server's hostname that the
 		 * user passed in.
 		 */
       memset (&hints, 0, sizeof (hints));
       hints.ai_family = AF_INET;
  	 /* esta funci�n es la recomendada para la compatibilidad con IPv6 gethostbyname queda obsoleta*/
+
+
     errcode = getaddrinfo (argv[1], NULL, &hints, &res); 
     if (errcode != 0){
 			/* Name was not found.  Return a
@@ -143,14 +203,15 @@ char *argv[];
 		fprintf(stderr, "%s: No es posible resolver la IP de %s\n",
 				argv[0], argv[1]);
 		exit(1);
-      }
+    }
     else {
-			/* Copy address of host */
+		/* Copy address of host */
 		servaddr_in.sin_addr = ((struct sockaddr_in *) res->ai_addr)->sin_addr;
-	 }
-     freeaddrinfo(res);
-     /* puerto del servidor en orden de red*/
+	}
+    freeaddrinfo(res);
+    /* puerto del servidor en orden de red*/
 	 servaddr_in.sin_port = htons(PUERTO);
+
 
    /* Registrar SIGALRM para no quedar bloqueados en los recvfrom */
     vec.sa_handler = (void *) handler;
@@ -159,56 +220,57 @@ char *argv[];
             perror(" sigaction(SIGALRM)");
             fprintf(stderr,"%s: unable to register the SIGALRM signal\n", argv[0]);
             exit(1);
-        }
+    }
 	
+
+
+
+	//Comprobar que la cosa va bien xd
+	/* Send a "false connection" message to the UDP server listening socket (ls_UDP) */
+	//Es el envio que sirve para establecer la conexión, es decir, es que provoca que se conecte
+	if (sendto (s, " ", 1,0, (struct sockaddr *)&servaddr_in, addrlen) == -1) {
+		perror(argv[0]);
+		fprintf(stderr, "%s: unable to send request to \"connect\" \n", argv[0]);
+		exit(1);
+	}	
+
+	/* Waits for the response of the server with the new socket it has to talk to */
+	if(-1 == recvfrom(s, &reqaddr, sizeof(struct in_addr), 0, (struct sockaddr *)&servaddr_in, &addrlen)){
+		exit(1);
+	}
+
+	//if(-1 == recvUDP){
+
+	//}
+
+	//if(reqaddr.s addr == ADDRNOTFOUND)
+	//printf("gfdgdfgdfgdf");
     n_retry=RETRIES;
-    
+    int aux;
+	char buf[TAM_BUFFER];
+
+	//Tenemos que hacer un bucle infinito, en el cual, solo salga cuando ponga ADIOS
+
+
+
+
 	while (n_retry > 0) {
 		/* Send the request to the nameserver. */
         if (sendto (s, argv[2], strlen(argv[2]), 0, (struct sockaddr *)&servaddr_in,
-				sizeof(struct sockaddr_in)) == -1) {
-        		perror(argv[0]);
-        		fprintf(stderr, "%s: unable to send request\n", argv[0]);
-        		exit(1);
-        	}
+			sizeof(struct sockaddr_in)) == -1) {
+    		perror(argv[0]);
+    		fprintf(stderr, "%s: unable to send request\n", argv[0]);
+    		exit(1);
+        }
+		//int recvUDP(int s, char* respuesta, int sizeResp, struct sockaddr_in *servaddr_in, int *addrlen)
+		aux = recvUDP(s, buf, TAM_BUFFER, &servaddr_in, &addrlen);
+
 		/* Set up a timeout so I don't hang in case the packet
 		 * gets lost.  After all, UDP does not guarantee
 		 * delivery.
 		 */
-	    alarm(TIMEOUT);
-		/* Wait for the reply to come in. */
-        if (recvfrom (s, &reqaddr, sizeof(struct in_addr), 0,
-						(struct sockaddr *)&servaddr_in, &addrlen) == -1) {
-    		if (errno == EINTR) {
-    				/* Alarm went off and aborted the receive.
-    				 * Need to retry the request if we have
-    				 * not already exceeded the retry limit.
-    				 */
- 		         printf("attempt %d (retries %d).\n", n_retry, RETRIES);
-  	 		     n_retry--; 
-                    } 
-            else  {
-				printf("Unable to get response from");
-				exit(1); 
-                }
-              } 
-        else {
-            alarm(0);
-            /* Print out response. */
-            if (reqaddr.s_addr == ADDRNOTFOUND) 
-               printf("Host %s unknown by nameserver %s\n", argv[2], argv[1]);
-            else {
-                /* inet_ntop para interoperatividad con IPv6 */
-                if (inet_ntop(AF_INET, &reqaddr, hostname, MAXHOST) == NULL)
-                   perror(" inet_ntop \n");
-                printf("Address for %s is %s\n", argv[2], hostname);
-                }	
-            break;	
-            }
+	    
   }
 
-    if (n_retry == 0) {
-       printf("Unable to get response from");
-       printf(" %s after %d attempts.\n", argv[1], RETRIES);
-       }
+    
 }

@@ -43,7 +43,8 @@ extern int errno;
 #define LF '\n'
 #define TC '\0'		//Terminacion de Cadena
 
-int recibir(int , char *, int , struct sockaddr* , int *);
+int recibir(int , char *, int , struct sockaddr * , int *);
+int aniadirAlLog(char *, int);
 
 /*
  *			H A N D L E R
@@ -188,49 +189,98 @@ char *argv[];
 	printf("S: %s",buffer);
 	*/
 	int ret;
+	int finalizacion = 0;
 
-	while(1){
-		printf("ESTOY EN EL WHILE INFINITO\n");
+	while(finalizacion == 0){
+		
 		
 		ret = recibir(s, buffer, BUFFERSIZE, &servaddr_in, &addrlen);
-		
+		printf("S: %s",buffer);
+
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
-		if(strcmp(buffer, "220 Servicio Preparado")== 0){
-			printf("S: %s\n",buffer);
+		if(strcmp(buffer, "220 Servicio Preparado\r\n")== 0){
+			//printf("S: %s\n",buffer);
+			
 			//aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
 		}
 
+		
+		//Escribimos el mensaje al servidor.
+		if(strcmp(buffer, "221 Cerrando el Servicio\r\n")== 0){
+			finalizacion = 1;
 
+			//Añadir al log
+			//if(aniadirAlLog(CLIENTE, mensaje) == -1){
+				//perror("No se ha podido añadir la respuesta al fichero");	
+			//}
+			
 
+		}else{
+			printf("C: ");
+			//Respuesta del cliente
+			fgets(buffer, BUFFERSIZE-2, stdin);
+			int len = strlen(buffer);
+			if(len > 0 && buffer[len-1] == '\n'){
+				buffer[len-1] = '\0';
+			}
 
-		//Respuesta del cliente
-		fgets(buffer, BUFFERSIZE-2, stdin);
-		int len = strlen(buffer);
-		if(len > 0 && buffer[len-1] == '\n'){
-			buffer[len-1] = '\0';
-		}
-
-		strcat(buffer,"\r\n");
-		/* Send the request to the nameserver. */
-        if (sendto (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in,
-				sizeof(struct sockaddr_in)) == -1) {
+			strcat(buffer,"\r\n");
+			/* Send the request to the nameserver. */
+        	if (sendto (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in,
+					sizeof(struct sockaddr_in)) == -1) {
         		perror(argv[0]);
         		fprintf(stderr, "%s: unable to send request\n", argv[0]);
-        		exit(1);
-        	}
+    			exit(1);
+    		}
+		}
+
+		
 	
 
 
-		//Esto es como si fuese la funcion y no va
-    	
 		
-    
-
 
 	}	
 	
 		
 }
+
+
+
+//Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
+int aniadirAlLog( char *cadena, int valor){
+	
+	FILE *Fich;
+	long timevar;
+	time_t t = time(&timevar);
+	struct tm* ltime = localtime(&t);
+
+	int hora = ltime->tm_hour;
+	int minutos = ltime->tm_min;
+	int segundos = ltime->tm_sec;
+
+
+	if((Fich = fopen("peticiones.log", "a")) == NULL){
+		//Fichero corrompido
+		return -1;
+	}
+	
+	
+	//Añadios el mensaje, pero el primer mensaje solo es la hora
+	if(valor == 1){
+		fprintf(Fich, "HORA: %02d:%02d:%02d | \t", hora, minutos, segundos);
+		fprintf(Fich, "RESPUESTA SERVIDOR: %s\n", cadena);
+	} else{
+		fprintf(Fich, "FECHA Y HORA DEL COMIENZO:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
+	}
+				
+
+	
+
+	fclose(Fich);
+	return 0;
+}
+
 
 
 
@@ -275,7 +325,6 @@ int recibir(int s, char *buffer, int size, struct sockaddr *servaddr_in, int *ad
     			 * not already exceeded the retry limit.
     			 */
  			    printf("attempt %d (retries %d).\n", n_retry, RETRIES);
-  	 		    printf("No le llega");
 				n_retry--; 
                     } 
             else  {
@@ -293,7 +342,7 @@ int recibir(int s, char *buffer, int size, struct sockaddr *servaddr_in, int *ad
             	//    if (inet_ntop(AF_INET, &reqaddr, hostname, MAXHOST) == NULL)
             	//       perror(" inet_ntop \n");
                 
-			printf("%s",buffer);
+				
 			break;
             }
   

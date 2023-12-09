@@ -36,7 +36,7 @@ extern int errno;
 
 int comprobarMensaje(char *);
 int obtenerNumero(char *);
-int aniadirAlLog(char *, int);
+int aniadirAlLog(char *, struct sockaddr_in, char* );
 int calcularNumeroRandom();
 void aniadirCRLF(char *, int );
 int eliminarCRLF(char *string);
@@ -289,24 +289,7 @@ char *argv[];
                     	exit (1);
                     	}
 
-
-					///////////////////////////////////////////
-					FILE *file;
-					// Abre un archivo para escritura
-    				file = fopen("salida.txt", "w");
-    				if (file == NULL) {
-        			perror("Error al abrir el archivo");
-        			return 1;
-    				}
-
-    				// Escribe en el archivo
-    				fprintf(file, "Estoy despues de leer y deberia recoger, %s.\n",buffer);
-
-    				// Cierra el archivo
-    				fclose(file);
-					////////////////////////////////////
-				
-
+			
 
 					/* When a new client sends a UDP datagram, his information is stored
 					* in "clientaddr_in", so we can create a false connection by sending messages
@@ -619,13 +602,19 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 
 
 	//Declaraciones para hacer la funcionalidad
-	int tipo;
+	//Finalizar el bucle ya que quiere terminar xd
+	int finalizacion = 0;
+	int i=0;
+	//Declaro variables para ver si se puede entrar en los casos o no
+	int mensajeHola = 0; //En el momento que entre en Hola ya no podria entrar mas, es el primer mensaje del servidor
 	int estamosJugando = 0;
-	int mensajeHola = 0;
-	int valorAResolver = 0;	
-	int aux;
-	int numero;
+	int primerMensaje = 0;
+	int tipo;
+	int numero = 0;
+	int aux= 0;
 	int numIntentos;
+	int valorAResolver;
+	//char mensaje[BUFFERSIZE];
 
 	status = getnameinfo((struct sockaddr *)&clientaddr_in,sizeof(clientaddr_in), hostname, MAXHOST,NULL,0,0);
 	if(status){
@@ -641,15 +630,20 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 
 
 	//Enviamos Primer mensaje al cliente
-	if ( nc = sendto (s, "Servicio Preparado\r\n", BUFFERSIZE,
+	if ( nc = sendto (s, "220 Servicio Preparado\r\n", BUFFERSIZE,
 			0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
         perror("serverUDP");
         printf("%s: sendto error\n", "serverUDP");
         return;
     }
+	//Añadir al log		
+	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname) == -1){
+		perror("No se ha podido añadir la respuesta al fichero");
+	}
 	
 	while(1){
-		
+
+		char buf[BUFFERSIZE];
 		//Recibe la respuesta y despues el servidor hace lo necesario
 		cc = recvfrom(s, buf, BUFFERSIZE, 0,
                    		(struct sockaddr *)&clientaddr_in, &addrlen);
@@ -675,7 +669,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 		//Comprobamos si es tipo = 2, ya que tendria una respuesta y son dos mensjes a tener
 		if(tipo == 2){
 			numero = obtenerNumero(buf);
-			printf("numero %d",numero);
+			//printf("numero %d",numero);
 			if(numero <= -1){
 				tipo = 5;
 			}
@@ -703,7 +697,8 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 			if(aniadirAlLog(mensaje, 1) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}*/
-
+			//aniadirCRLF(mensaje, BUFFERSIZE);
+			
 			strcat(mensaje, "\r\n");
 			if ( nc = sendto (s, mensaje, BUFFERSIZE,
 				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
@@ -711,17 +706,137 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
          		printf("%s: sendto error\n", "serverUDP");
          		return;
          	}
+		}//RESPUESTA <NUMERO>
+		else if(tipo == 2 && estamosJugando == 1){
+			char numStr[BUFFERSIZE];
+			char mensaje[BUFFERSIZE];
+			i = 0;
+			numIntentos = numIntentos - 1;
+			//printf("\n%d\t", valorAResolver);
+			//printf("\n%d\t", numero);
+			//Tiene que enviar si es mayor, menor y el numero de intentos restantes
+			//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
+
+			if(numIntentos == 0){
+				strcpy(mensaje, "375 FALLO");
+				estamosJugando = 0;
+			}else{
+
+				if(numero > valorAResolver){
+					//Es MENOR EL NUMERO				
+					strcpy(mensaje, "354 MENOR#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+					
+
+				}else if(numero < valorAResolver){
+					//EL NUMERO ES MAYOR
+					strcpy(mensaje, "354 MAYOR#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+				}else {
+
+					//ACIERTO
+					i=1;
+					strcpy(mensaje, "350 ACIERTO#");
+					sprintf(numStr, "%d",numIntentos);
+					strcat(mensaje,numStr);
+					estamosJugando = 0;
+					}
+			}
+
+			//Añadir al log		
+			//if(aniadirAlLog(mensaje, 1) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
+
+			//aniadirCRLF(mensaje, BUFFERSIZE);
+			strcat(mensaje, "\r\n");
+			if ( nc = sendto (s, mensaje, BUFFERSIZE,
+				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+         		perror("serverUDP");
+         		printf("%s: sendto error\n", "serverUDP");
+         		return;
+         	}
+			printf("%s\n", mensaje);
+
+		}
+		//Cliente "+"
+		else if(tipo == 3 && (estamosJugando == 0 || numIntentos == 0) && mensajeHola == 1){	//Solo se mete si numero de errores = 0 ooooo hemos terminado){
+			char mensaje[BUFFERSIZE];
+			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
+			numIntentos = 5;
+			estamosJugando = 1;
+			char numStr[10];
+
+			strcpy(mensaje, "250 Adivina el valor entre 0 y 100#");
+			sprintf(numStr, "%d",numIntentos);
+			strcat(mensaje, numStr);
+
+			//Añadir al log		
+			//if(aniadirAlLog(mensaje, 1) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
+					
+			//aniadirCRLF(mensaje, BUFFERSIZE);
+			strcat(mensaje, "\r\n");
+			if ( nc = sendto (s, mensaje, BUFFERSIZE,
+				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+         		perror("serverUDP");
+         		printf("%s: sendto error\n", "serverUDP");
+         		return;
+         	}
+			
+			
+		}
+		//Cliente "ADIOS"
+		else if(tipo == 4){
+			//char mensaje[BUFFERSIZE];;
+			//strcpy(mensaje, "221 Cerrando el Servicio");
+
+			//Añadir al log		
+			//if(aniadirAlLog(mensaje, 1) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}
+			
+			//aniadirCRLF(mensaje, TAM_BUFFER);
+			//strcat(mensaje, "\r\n");
+			if ( nc = sendto (s, "221 Cerrando el Servicio\r\n", BUFFERSIZE,
+				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+         		perror("serverUDP");
+         		printf("%s: sendto error\n", "serverUDP");
+         		return;
+         	}
+
+			finalizacion = 1;
+			
+		}
+		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
+		else{
+			
+			char mensaje[BUFFERSIZE];
+			strcpy(mensaje, "500 Error de sintaxis\r\n");
+
+			//Añadir al log		
+			//if(aniadirAlLog(mensaje, 1) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//MAKE}
+
+			//aniadirCRLF(mensaje, BUFFERSIZE);
+			strcat(mensaje, "\r\n");
+			if ( nc = sendto (s, mensaje, BUFFERSIZE,
+					0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
+         		perror("serverUDP");
+         		printf("%s: sendto error\n", "serverUDP");
+         		return;
+         	}
 		}
 
 
-
-
-
-
-
-		
-	}
-	   
+		if(finalizacion == 1){
+			break;
+		}
+	}  
  }
 
 
@@ -763,13 +878,16 @@ int obtenerNumero(char *cadena){
 }
 
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
-int aniadirAlLog( char *cadena, int valor){
+int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio){
 	
 	FILE *Fich;
 	long timevar;
 	time_t t = time(&timevar);
 	struct tm* ltime = localtime(&t);
 
+	int dia = ltime->tm_mday;
+	int mes = ltime->tm_mon + 1;
+	int anio = ltime->tm_year + 1900;
 	int hora = ltime->tm_hour;
 	int minutos = ltime->tm_min;
 	int segundos = ltime->tm_sec;
@@ -780,16 +898,26 @@ int aniadirAlLog( char *cadena, int valor){
 		return -1;
 	}
 	
+	char ipCliente[INET_ADDRSTRLEN]; // Buffer para almacenar la dirección IP del cliente
+
+    // Convierte la dirección IP a una cadena
+    if (inet_ntop(AF_INET, &clientaddr_in.sin_addr, ipCliente, INET_ADDRSTRLEN) == NULL) {
+        perror("inet_ntop falló");
+        return -1; // O manejar el error como prefieras
+    }
+
 	
 	//Añadios el mensaje, pero el primer mensaje solo es la hora
+	/*
 	if(valor == 1){
 		fprintf(Fich, "HORA: %02d:%02d:%02d | \t", hora, minutos, segundos);
 		fprintf(Fich, "RESPUESTA SERVIDOR: %s\n", cadena);
 	} else{
-		fprintf(Fich, "FECHA Y HORA DEL COMIENZO:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
+		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
 	}
-				
-
+	*/			
+	fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta enviada a: %s|| IP: %s || PROTOCOLO: UDP || PUERTO: %u || MENSAJE SERVIDOR: %s", 
+	ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, ntohs(clientaddr_in.sin_port), cadena);
 	
 
 	fclose(Fich);

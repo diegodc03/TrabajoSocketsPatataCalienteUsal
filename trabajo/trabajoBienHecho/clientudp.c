@@ -38,7 +38,7 @@ extern int errno;
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
 #define PUERTO 17278
 #define TIMEOUT 6
-#define MAXHOST 516
+#define MAXHOST 128
 
 #define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
 #define LF '\n'
@@ -200,12 +200,6 @@ char *argv[];
 		//Escribimos el mensaje al servidor.
 		if(strcmp(buffer, "221 Cerrando el Servicio\r\n")== 0){
 			finalizacion = 1;
-
-			//Añadir al log
-			//if(aniadirAlLog(CLIENTE, mensaje) == -1){
-				//perror("No se ha podido añadir la respuesta al fichero");	
-			//}
-			
 
 		}else{
 			printf("C: ");

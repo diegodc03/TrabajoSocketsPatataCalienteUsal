@@ -21,12 +21,6 @@
 #define TC '\0'		//Terminacion de Cadena
 
 
-#define CLIENTE "cliente"
-#define SERVIDOR "servidor"
-#define HOLA "HOLA"
-#define RESPUESTA "RESPUESTA"
-#define SIGNOSUMA "+"
-#define ADIOS "ADIOS"
 
 
 extern int errno;

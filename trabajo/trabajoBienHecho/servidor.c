@@ -45,7 +45,7 @@ int eliminarCRLF(char *string);
  *
  */
  
-void serverTCP(int s, struct sockaddr_in peeraddr_in);
+void serverTCP(int s, struct sockaddr_in peeraddr_in, struct sockaddr_in);
 void serverUDP(int s, struct sockaddr_in clientaddr_in);
 void errout(char *);		/* declare error out routine */
 
@@ -114,6 +114,9 @@ char *argv[];
 		 * can connect.  The listen backlog is set to 5, which
 		 * is the largest currently supported.
 		 */
+
+	
+
 	if (listen(ls_TCP, 5) == -1) {
 		perror(argv[0]);
 		fprintf(stderr, "%s: unable to listen on socket\n", argv[0]);
@@ -241,7 +244,7 @@ char *argv[];
         					exit(1);
         				case 0:		/* Child process comes here. */
                 			close(ls_TCP); /* Close the listen socket inherited from the daemon. */
-        					serverTCP(s_TCP, clientaddr_in);
+        					serverTCP(s_TCP, clientaddr_in, myaddr_in);
         					exit(0);
         				default:	/* Daemon process comes here. */
         					/* The daemon needs to remember
@@ -323,6 +326,7 @@ char *argv[];
 						printf("%s: unable to bind address new socket UDP for new client\n", argv[0]);
 						exit(1);
 					}
+
 
 					/* As well as its done in TCP, a new thread is created for that false connection */
 					switch (fork()) {
@@ -407,8 +411,11 @@ char *argv[];
  *	logging information to stdout.
  *
  */
-void serverTCP(int s, struct sockaddr_in clientaddr_in)
+void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in seraddr_in)
 {
+	
+
+
 	int reqcnt = 0;		/* keeps count of number of requests */
 	char buf[TAM_BUFFER];		/* This example uses TAM_BUFFER byte messages. */
 	char hostname[MAXHOST];		/* remote host's name string */
@@ -524,6 +531,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			if (len1 == -1) errout(hostname);
 			len += len1;
 		}
+			
 		
 			/* Increment the request count. */
 		reqcnt++;
@@ -569,7 +577,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 
 			
 			//Añadir al log			
-			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0) == -1){
+			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP",0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -617,7 +625,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			}
 
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0) == -1){
+			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP",0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -642,7 +650,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 
 				
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0) == -1){
+			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 					
@@ -658,7 +666,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			strcpy(mensaje, "221 Cerrando el Servicio");
 
 			//Añadir al log			
-			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0) == -1){
+			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 			
@@ -677,7 +685,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in)
 			strcpy(mensaje, "500 Error de sintaxis");
 
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0) == -1){
+			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 

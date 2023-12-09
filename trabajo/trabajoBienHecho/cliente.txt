@@ -118,3 +118,31 @@ RESPUESTA 554
 500 Error de sintaxis
 ADIOS
 221 Cerrando el Servicio
+220 Servicio Preparado
+
+HOLA
+250 Adivina el valor entre 0 y 100#4
+220 Servicio Preparado
+
+HOLA
+250 Adivina el valor entre 0 y 100#4
+NO
+500 Error de sintaxis
+RESPUESTA 20
+354 MENOR#3
+ADIOS
+221 Cerrando el Servicio
+220 Servicio Preparado
+
+HOLA
+250 Adivina el valor entre 0 y 100#4
+RESPUESTA 10
+354 MENOR#3
+RESPUESTA 5
+354 MAYOR#2
+RESPUESTA 7
+350 ACIERTO#1
++
+250 Adivina el valor entre 0 y 100#5
+ADIOS
+221 Cerrando el Servicio

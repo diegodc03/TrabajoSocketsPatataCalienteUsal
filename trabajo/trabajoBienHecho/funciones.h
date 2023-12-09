@@ -5,11 +5,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <errno.h>
+#include <arpa/inet.h>
 
 //Declaracion de variables
-
-#define PUERTO 43687
+#define RETRIES 5
+#define TIMEOUT 6
+#define PUERTO 17278
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
 #define TAM_BUFFER 516
@@ -30,30 +32,22 @@
 extern int errno;
 
 
-//Struct
-
-typedef struct{
-	char mensaje[TAM_BUFFER];
-	int numero;
-}Msj;
-
-
-typedef struct{
-	int num;
-	char cadena[BUFFERSIZE];
-}respuestasServidor;
-
-
 
 
 //Funciones
-int eliminarCRLF(char *);
-void aniadirCRLF(char *, int );
-int comprobarMensaje(char *)
+int comprobarMensaje(char *);
+
 int obtenerNumero(char *);
+
+int aniadirAlLog(char *, struct sockaddr_in, char*, char*, int );
+
 int calcularNumeroRandom();
-int aniadirAlLog(char *, char*);
-void dividirCadena(char *, int *, char *);
+
+void aniadirCRLF(char *, int );
+
+int eliminarCRLF(char *);
+
+int recibir(int , char *, int , struct sockaddr * , int *);
 
 
 #endif // !__FUNCIONES__

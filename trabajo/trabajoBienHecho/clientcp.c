@@ -22,26 +22,11 @@
 #include <string.h>
 #include <time.h>
 
-#define PUERTO 43687 
-#define TAM_BUFFER 516
-#define BEFFERSIZE 516
 
-#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
-#define LF '\n'
-#define TC '\0'		//Terminacion de Cadena
-
-
-#define CLIENTE "cliente"
-#define SERVIDOR "servidor"
-#define HOLA "HOLA"
-#define RESPUESTA "RESPUESTA"
-#define SIGNOSUMA "+"
-#define ADIOS "ADIOS"
-
-
+#include "funciones.h"
 //Funciones 
-int aniadirAlLog(char *, char *);
-int eliminarCRLF(char *);
+//int aniadirAlLog(char *, char *);
+//int eliminarCRLF(char *);
 
 //Struct
 
@@ -171,7 +156,12 @@ char *argv[];
 		 * its end of the connection.
 		 */
 	int aux;
-	
+	char hostName[BUFFERSIZE];
+
+	// Asume que addr ha sido rellenado con la dirección del cliente/servidor
+	int result = getnameinfo((struct sockaddr *)&myaddr_in, addrlen, hostName, sizeof(hostName), NULL, 0, 0);
+
+
 	while (i = recv(s, buf, TAM_BUFFER, 0)) {
 		if (i == -1) {
             perror(argv[0]);
@@ -209,17 +199,17 @@ char *argv[];
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
 		if(strcmp(buf, "220 Servicio Preparado")== 0){
 			printf("S: %s\n",buf);
-			aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
+			//aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
 		}
 		else if(strcmp(buf,"221 Cerrando el Servicio") == 0){
 			printf("S: %s\n",buf);
-			aniadirAlLog("cliente.txt", buf);
+			//aniadirAlLog("cliente.txt", buf);
 			break;
 		}else{
 
 			//Respuesta del servidor
 			printf("S: %s\n",buf);
-			aniadirAlLog("cliente.txt", buf);
+			
 		}
 
 		
@@ -233,11 +223,10 @@ char *argv[];
 			buf[len-1] = '\0';
 		}
 
-		//printf("C: %s\n", buf);
-		
-		aniadirAlLog("cliente.txt", buf);
-
-
+		//Añadir al log		
+			if(aniadirAlLog(buf, myaddr_in, hostName, "TCP", 1) == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}		
 
 		strcat(buf,"\r\n");
 		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){
@@ -255,6 +244,8 @@ char *argv[];
 }
 
 
+
+/*
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
 int aniadirAlLog(char *nombre, char *cadena){
 	
@@ -298,4 +289,4 @@ int eliminarCRLF(char *string){
 	
 		i++;
 	}
-}
+}*/

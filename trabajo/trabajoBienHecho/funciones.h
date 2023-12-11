@@ -37,8 +37,6 @@ int aniadirAlLog(char *, struct sockaddr_in, char*, char*, int );
 
 int calcularNumeroRandom();
 
-void aniadirCRLF(char *, int );
-
 int eliminarCRLF(char *);
 
 int recibir(int , char *, int , struct sockaddr * , int *);

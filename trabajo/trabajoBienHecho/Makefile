@@ -1,25 +1,35 @@
 CC = gcc
 CFLAGS = 
-# Descomentar la siguiente linea para olivo
-# LIBS = -lsocket -lnsl
-# Descomentar la siguiente linea para linux
 LIBS =
 
-PROGS = servidor clientcp clientudp
+# Aquí se enumeran todos los ejecutables a construir
+PROGS	=	cliente
 
-all: ${PROGS}
+all:	$(PROGS)
 
-servidor: servidor.o funciones.o
-	${CC} ${CFLAGS} -o $@ servidor.o funciones.o ${LIBS}
-	
-clientcp: clientcp.o funciones.o
-	${CC} ${CFLAGS} -o $@ clientcp.o funciones.o ${LIBS}
+servidor:	servidor.o	funciones.o
+	${CC}	${CFLAGS}	-o	$@	servidor.o	funciones.o	${LIBS}
 
-clientudp: clientudp.o funciones.o
-	${CC} ${CFLAGS} -o $@ clientudp.o funciones.o ${LIBS}
+# Regla para construir el ejecutable cliente
+cliente:	cliente.o	clientcp.o	clientudp.o	funciones.o
+	$(CC)	$(CFLAGS)	-o	$@	cliente.o	clientcp.o	clientudp.o	funciones.o	$(LIBS)
 
-funciones.o: funciones.c funciones.h
-	${CC} ${CFLAGS} -c funciones.c
+# Regla para compilar cliente.c a cliente.o
+cliente.o:	cliente.c
+	$(CC)	$(CFLAGS)	-c	cliente.c
 
+# Regla para compilar clientcp.c a clientcp.o
+clientcp.o:	clientcp.c
+	$(CC)	$(CFLAGS)	-c	clientcp.c
+
+# Regla para compilar clientudp.c a clientudp.o
+clientudp.o:	clientudp.c
+	$(CC)	$(CFLAGS)	-c	clientudp.c
+
+# Regla para compilar funciones.c a funciones.o
+funciones.o:	funciones.c	funciones.h
+	$(CC)	$(CFLAGS)	-c	funciones.c
+
+# Regla para limpiar los archivos compilados
 clean:
-	rm -f *.o ${PROGS}
+	rm -f *.o $(PROGS)

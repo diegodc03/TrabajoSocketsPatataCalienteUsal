@@ -1,52 +1,9 @@
-/*
- *			C L I E N T C P
- *
- *	This is an example program that demonstrates the use of
- *	stream sockets as an IPC mechanism.  This contains the client,
- *	and is intended to operate in conjunction with the server
- *	program.  Together, these two programs
- *	demonstrate many of the features of sockets, as well as good
- *	conventions for using these features.
- *
- *
- */
- 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <string.h>
-#include <time.h>
 
-
-#include "funciones.h"
-//Funciones 
-//int aniadirAlLog(char *, char *);
-//int eliminarCRLF(char *);
-
-//Struct
+#include "clientcp.h"
 
 
 
-/*
- *			M A I N
- *
- *	This routine is the client which request service from the remote.
- *	It creates a connection, sends a number of
- *	requests, shuts down the connection in one direction to signal the
- *	server about the end of data, and then receives all of the responses.
- *	Status will be written to stdout.
- *
- *	The name of the system to which the requests will be sent is given
- *	as a parameter to the command.
- */
-int main(argc, argv)
-int argc;
-char *argv[];
+int clienTCP(char **argv, int argc)
 {
     int s;				/* connected socket descriptor */
    	struct addrinfo hints, *res;
@@ -58,11 +15,6 @@ char *argv[];
 	char buf[TAM_BUFFER];
 	const char *subcadena = "\r\n";
 
-
-	if (argc != 2) {
-		fprintf(stderr, "Usage:  %s <remote host>\n", argv[0]);
-		exit(1);
-	}
 
 	/* Create the socket. */
 	s = socket (AF_INET, SOCK_STREAM, 0);
@@ -135,19 +87,19 @@ char *argv[];
 			argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
 	
-	
-		/* Now, shutdown the connection for further sends.
-		 * This will cause the server to receive an end-of-file
-		 * condition after it has received all the requests that
-		 * have just been sent, indicating that we will not be
-		 * sending any further requests.
-		 * if (shutdown(s, 1) == -1) {
-		perror(argv[0]);
-		fprintf(stderr, "%s: unable to shutdown socket\n", argv[0]);
-		exit(1);
+	FILE *f;
+	if(argc == 4){
+		//Introduzco en un array todas las tespuestas
+		printf("%s", argv[3]);
+		f = fopen(argv[3], "r");
+		if(f == NULL){
+			perror("Error al abrir el archivo");
+			return 1;
+		}
 	}
-		 */
+
 	
+		
 
 		/* Now, start receiving all of the replys from the server.
 		 * This loop will terminate when the recv returns zero,
@@ -155,11 +107,15 @@ char *argv[];
 		 * after the server has sent all of its replies, and closed
 		 * its end of the connection.
 		 */
+
+
 	int aux;
 	char hostName[BUFFERSIZE];
 
 	// Asume que addr ha sido rellenado con la dirección del cliente/servidor
 	int result = getnameinfo((struct sockaddr *)&myaddr_in, addrlen, hostName, sizeof(hostName), NULL, 0, 0);
+
+	 int cont;
 
 
 	while (i = recv(s, buf, TAM_BUFFER, 0)) {
@@ -199,11 +155,9 @@ char *argv[];
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
 		if(strcmp(buf, "220 Servicio Preparado")== 0){
 			printf("S: %s\n",buf);
-			//aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
 		}
 		else if(strcmp(buf,"221 Cerrando el Servicio") == 0){
 			printf("S: %s\n",buf);
-			//aniadirAlLog("cliente.txt", buf);
 			break;
 		}else{
 
@@ -214,19 +168,24 @@ char *argv[];
 
 		
 		printf("C: ");
+		//En vez de leer de pantalla, leo de fichero
+		if(argc == 4){
+			
+			if(fgets(buf, TAM_BUFFER-2, f) == NULL){
+				return 1;
+			}
+			
 
-
-		//Respuesta del cliente
-		fgets(buf, TAM_BUFFER-2, stdin);
-		int len = strlen(buf);
-		if(len > 0 && buf[len-1] == '\n'){
-			buf[len-1] = '\0';
+		}else{
+			//Respuesta del cliente manualmente
+			fgets(buf, TAM_BUFFER-2, stdin);
+			int len = strlen(buf);
+			if(len > 0 && buf[len-1] == '\n'){
+				buf[len-1] = '\0';
+			}
 		}
 
-		//Añadir al log		
-			//if(aniadirAlLog(buf, myaddr_in, hostName, "TCP", 1) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}		
+		printf("%s", buf);
 
 		strcat(buf,"\r\n");
 		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){
@@ -235,7 +194,6 @@ char *argv[];
 		}
 
 
-			/* Print out message indicating the identity of this reply. */
 	}
 
     /* Print message indicating completion of task. */

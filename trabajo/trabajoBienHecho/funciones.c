@@ -114,25 +114,6 @@ int calcularNumeroRandom(){
 }
 
 
-
-void aniadirCRLF(char *string, int tamanioBuffer){
-	int tamanio;
-
-
-	tamanio = strlen(string);
-
-	if(tamanio >= tamanioBuffer-2){
-		string[tamanioBuffer-2] = CR;
-		string[tamanioBuffer-1] = LF;
-	}else{
-		string[tamanio] = CR;
-		string[tamanio + 1] = LF;
-	}
-    
-}
-
-
-
 //Eliminamos de string CR-LF
 int eliminarCRLF(char *string){
 

@@ -30,7 +30,7 @@
 
 #include <unistd.h>
 
-extern int errno;
+#include "clientudp.h"
 #include "funciones.h"
 
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
@@ -39,13 +39,8 @@ extern int errno;
 #define PUERTO 17278
 #define TIMEOUT 6
 #define MAXHOST 128
+extern int errno;
 
-#define CR '\r'			//Los declaramos aqui para que sea mas facil el llamdo
-#define LF '\n'
-#define TC '\0'		//Terminacion de Cadena
-
-int recibir(int , char *, int , struct sockaddr * , int *);
-//int aniadirAlLog(char *, int);
 
 /*
  *			H A N D L E R
@@ -71,9 +66,7 @@ void handler()
  *	be the the name of the target host for which the internet address
  *	is sought.
  */
-int main(argc, argv)
-int argc;
-char *argv[];
+int clientUDP(char **argv, int argc )
 {
 	int i, errcode;
 	int retry = RETRIES;		/* holds the retry count */
@@ -87,10 +80,6 @@ char *argv[];
    	char hostname[MAXHOST];
    	struct addrinfo hints, *res;
 
-	if (argc != 3) {
-		fprintf(stderr, "Usage:  %s <nameserver> <target>\n", argv[0]);
-		exit(1);
-	}
 	
 		/* Create the socket. */
 	s = socket (AF_INET, SOCK_DGRAM, 0);
@@ -114,17 +103,20 @@ char *argv[];
 	myaddr_in.sin_family = AF_INET;
 	myaddr_in.sin_port = 0;
 	myaddr_in.sin_addr.s_addr = INADDR_ANY;
+
 	if (bind(s, (const struct sockaddr *) &myaddr_in, sizeof(struct sockaddr_in)) == -1) {
 		perror(argv[0]);
 		fprintf(stderr, "%s: unable to bind socket\n", argv[0]);
 		exit(1);
 	   }
+
     addrlen = sizeof(struct sockaddr_in);
     if (getsockname(s, (struct sockaddr *)&myaddr_in, &addrlen) == -1) {
             perror(argv[0]);
             fprintf(stderr, "%s: unable to read socket address\n", argv[0]);
             exit(1);
     }
+
 
             /* Print out a startup message for the user. */
     time(&timevar);
@@ -146,19 +138,21 @@ char *argv[];
  	 /* esta funci�n es la recomendada para la compatibilidad con IPv6 gethostbyname queda obsoleta*/
     errcode = getaddrinfo (argv[1], NULL, &hints, &res); 
     if (errcode != 0){
-			/* Name was not found.  Return a
-			 * special value signifying the error. */
+		/* Name was not found.  Return a
+		 * special value signifying the error. */
 		fprintf(stderr, "%s: No es posible resolver la IP de %s\n",
 				argv[0], argv[1]);
 		exit(1);
-      }
+    }
     else {
-			/* Copy address of host */
+		/* Copy address of host */
 		servaddr_in.sin_addr = ((struct sockaddr_in *) res->ai_addr)->sin_addr;
-	 }
-     freeaddrinfo(res);
-     /* puerto del servidor en orden de red*/
-	 servaddr_in.sin_port = htons(PUERTO);
+	}
+    freeaddrinfo(res);
+    /* puerto del servidor en orden de red*/
+	servaddr_in.sin_port = htons(PUERTO);
+
+
 
    /* Registrar SIGALRM para no quedar bloqueados en los recvfrom */
     vec.sa_handler = (void *) handler;
@@ -168,11 +162,14 @@ char *argv[];
             fprintf(stderr,"%s: unable to register the SIGALRM signal\n", argv[0]);
             exit(1);
         }
-	
+
+
+
+
 	char buffer[BUFFERSIZE];
-	//Comprobar que la cosa va bien xd
-	/* Send a "false connection" message to the UDP server listening socket (ls_UDP) */
-	//Es el envio que sirve para establecer la conexión, es decir, es que provoca que se conecte
+
+	
+	//Es el envio que sirve para establecer la conexión, es decir, es que provoca que se conecte al ls_UDP
 	if (sendto (s, "", BUFFERSIZE,0, (struct sockaddr *)&servaddr_in, addrlen) == -1) {
 		perror(argv[0]);
 		fprintf(stderr, "%s: unable to send request to \"connect\" \n", argv[0]);
@@ -180,31 +177,43 @@ char *argv[];
 	}	
 
 	
+	FILE *f;
+	if(argc == 4){
+
+		printf("%s", argv[3]);
+		f = fopen(argv[3], "r");
+		if(f == NULL){
+			perror("Error al abrir el archivo");
+			return 1;
+		}
+	}
+
+
+
+
 	int ret;
 	int finalizacion = 0;
 
 	while(finalizacion == 0){
 		
 		
-		//ret = recibir(s, buffer, BUFFERSIZE, &servaddr_in, &addrlen);
-		int n_retry;
-		n_retry=RETRIES;
-		while (n_retry > 0) {
-			//RESET(buffer, BUFFERSIZE);		
-			/* Set up a timeout so I don't hang in case the packet
-		 	* gets lost.  After all, UDP does not guarantee
-		 	* delivery.
-		 	*/
+		//Recibe
+		int numIntentos = 0;
+		while (numIntentos < RETRIES) {
 	    	alarm(TIMEOUT);
-		
-			// Wait for the reply to come in. 
-		
-        	if (recvfrom (s, buffer, BUFFERSIZE, 0,
-				(struct sockaddr *)&servaddr_in, &addrlen) == -1) {
-					n_retry = n_retry -1;
-					printf("Unable to get response from");
-					exit(1); 
-                
+			//Esperar
+			int cc;
+        	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen);
+			if(cc == -1){
+				//Implica que una señal interrumpió el rcvfrom
+				if(errno == EINTR){
+					numIntentos = numIntentos + 1;
+					fprintf(stderr, "Intento %d --> Intentos %d", numIntentos, RETRIES);
+				}
+				else{
+					printf("Imposibilidad de llegar el mensaje");
+					exit(1);
+				}
         	} 
         	else {
             	alarm(0);	
@@ -220,13 +229,31 @@ char *argv[];
 			finalizacion = 1;
 
 		}else{
+
 			printf("C: ");
-			//Respuesta del cliente
-			fgets(buffer, BUFFERSIZE-2, stdin);
-			int len = strlen(buffer);
-			if(len > 0 && buffer[len-1] == '\n'){
-				buffer[len-1] = '\0';
+
+			//Respuesta
+			if(argc == 4){
+				
+				if(fgets(buffer, BUFFERSIZE-2, f) == NULL){
+					return 1;
+				}
+				
+			
+			}else if(argc == 3){
+				//Respuesta del cliente
+				fgets(buffer, BUFFERSIZE-2, stdin);
+				int len = strlen(buffer);
+				if(len > 0 && buffer[len-1] == '\n'){
+					buffer[len-1] = '\0';
+				}
 			}
+
+			printf("%s", buffer);
+
+
+			
+			
 			
 			strcat(buffer,"\r\n");
 			/* Send the request to the nameserver. */

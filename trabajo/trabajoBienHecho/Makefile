@@ -7,12 +7,6 @@ PROGS	=	cliente
 
 all:	$(PROGS)
 
-servidor:	servidor.o	funciones.o
-	${CC}	${CFLAGS}	-o	$@	servidor.o	funciones.o	${LIBS}
-
-# Regla para construir el ejecutable cliente
-cliente:	cliente.o	clientcp.o	clientudp.o	funciones.o
-	$(CC)	$(CFLAGS)	-o	$@	cliente.o	clientcp.o	clientudp.o	funciones.o	$(LIBS)
 
 # Regla para compilar cliente.c a cliente.o
 cliente.o:	cliente.c
@@ -29,6 +23,14 @@ clientudp.o:	clientudp.c
 # Regla para compilar funciones.c a funciones.o
 funciones.o:	funciones.c	funciones.h
 	$(CC)	$(CFLAGS)	-c	funciones.c
+
+servidor:	servidor.o	funciones.o
+	${CC}	${CFLAGS}	-o	$@	servidor.o	funciones.o	${LIBS}
+
+# Regla para construir el ejecutable cliente
+cliente:	cliente.o	clientcp.o	clientudp.o	funciones.o
+	$(CC)	$(CFLAGS)	-o	$@	cliente.o	clientcp.o	clientudp.o	funciones.o	$(LIBS)
+
 
 # Regla para limpiar los archivos compilados
 clean:

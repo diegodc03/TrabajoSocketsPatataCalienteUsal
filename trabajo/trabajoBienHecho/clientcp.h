@@ -29,7 +29,6 @@
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
 #define RETRIES	5		/* number of times to retry before givin up */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
-#define PUERTO 17278
 #define TIMEOUT 6
 #define MAXHOST 128
 extern int errno;

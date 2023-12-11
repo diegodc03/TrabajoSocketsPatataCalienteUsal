@@ -36,7 +36,6 @@
 #define ADDRNOTFOUND	0xffffffff	/* value returned for unknown host */
 #define RETRIES	5		/* number of times to retry before givin up */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
-#define PUERTO 17278
 #define TIMEOUT 6
 #define MAXHOST 128
 extern int errno;
@@ -206,14 +205,16 @@ int clientUDP(char **argv, int argc )
         	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen);
 			if(cc == -1){
 				//Implica que una señal interrumpió el rcvfrom
+				/*
 				if(errno == EINTR){
 					numIntentos = numIntentos + 1;
 					fprintf(stderr, "Intento %d --> Intentos %d", numIntentos, RETRIES);
 				}
-				else{
+				*/
+				//else{
 					printf("Imposibilidad de llegar el mensaje");
 					exit(1);
-				}
+				//}
         	} 
         	else {
             	alarm(0);	

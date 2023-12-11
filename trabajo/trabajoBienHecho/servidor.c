@@ -750,20 +750,20 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		//Recibe la respuesta y despues el servidor hace lo necesario
 		int numIntentos = 0;
 		while (numIntentos < RETRIES) {
-	    	alarm(TIMEOUT);
+	    	//alarm(TIMEOUT);
 			//Esperar
 			int cc;
         	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen)
 			if(cc == -1){
 				//Implica que una señal interrumpió el rcvfrom
-				if(errno == EINTR){
+				/*if(errno == EINTR){
 					numIntentos = numIntentos + 1;
 					fprintf(stderr, "Intento %d --> Intentos %d", numIntentos, RETRIES);
-				}
-				else{
+				}*/
+				//{
 					printf("Imposibilidad de llegar el mensaje");
 					exit(1);
-				}
+				//}
         	} 
         	else {
             	alarm(0);	

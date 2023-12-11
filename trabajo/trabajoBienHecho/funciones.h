@@ -12,6 +12,7 @@
 #define RETRIES 5
 #define TIMEOUT 6
 #define PUERTO 17278
+
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
 #define TAM_BUFFER 516

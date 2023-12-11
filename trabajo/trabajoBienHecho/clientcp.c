@@ -90,7 +90,7 @@ int clienTCP(char **argv, int argc)
 	FILE *f;
 	if(argc == 4){
 		//Introduzco en un array todas las tespuestas
-		printf("%s", argv[3]);
+		//printf("%s", argv[3]);
 		f = fopen(argv[3], "r");
 		if(f == NULL){
 			perror("Error al abrir el archivo");
@@ -151,7 +151,7 @@ int clienTCP(char **argv, int argc)
 		//Eliminamos CRLF
 		aux = eliminarCRLF(buf);
 		
-
+/*
 		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
 		if(strcmp(buf, "220 Servicio Preparado")== 0){
 			printf("S: %s\n",buf);
@@ -162,12 +162,12 @@ int clienTCP(char **argv, int argc)
 		}else{
 
 			//Respuesta del servidor
-			printf("S: %s\n",buf);
+			//printf("S: %s\n",buf);
 			
 		}
-
-		
 		printf("C: ");
+*/		
+		
 		//En vez de leer de pantalla, leo de fichero
 		if(argc == 4){
 			
@@ -185,7 +185,7 @@ int clienTCP(char **argv, int argc)
 			}
 		}
 
-		printf("%s", buf);
+		//printf("%s", buf);
 
 		strcat(buf,"\r\n");
 		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){

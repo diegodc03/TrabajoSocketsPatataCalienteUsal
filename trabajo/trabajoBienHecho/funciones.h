@@ -2,16 +2,24 @@
 #ifndef __FUNCIONES__
 #define __FUNCIONES__
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/errno.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <netdb.h>
 #include <string.h>
-#include <errno.h>
-#include <arpa/inet.h>
+#include <time.h>
+
+#include <unistd.h>
 
 //Declaracion de variables
 #define RETRIES 5
 #define TIMEOUT 6
-#define PUERTO 17278
+#define PUERTO 39004
 
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */

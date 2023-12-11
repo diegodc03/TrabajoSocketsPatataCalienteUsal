@@ -252,7 +252,7 @@ char *argv[];
 	    				alarm(TIMEOUT);
 						//Esperar
 						int cc;
-        				cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&clientaddr_in, &addrlen)
+        				cc = recvfrom (ls_UDP, buffer, BUFFERSIZE, 0, (struct sockaddr *)&clientaddr_in, &addrlen);
 						if(cc == -1){
 						//Implica que una señal interrumpió el rcvfrom
 						if(errno == EINTR){
@@ -462,16 +462,11 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			/* This sleep simulates the processing of the
 			 * request that a real server might do.
 			 */
-		sleep(1);
 
-		//Se elimina \r\n
 		aux = eliminarCRLF(buf);
-		
-
 
 		//Empezamos funcionalidad del programa
 		tipo = comprobarMensaje(buf);
-		//printf("\n%d\n",tipo);
 		
 		//Comprobamos si es tipo = 2, ya que tendria una respuesta y son dos mensjes a tener
 		if(tipo == 2){
@@ -485,7 +480,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 
 
 		//DEPENDIENDO EL CLIENTE, SE DEVOLVERÁ UNA COSA U OTRA
-
 		//HOLA
 		if(tipo == 1 && mensajeHola == 0){
 			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
@@ -516,10 +510,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			char mensaje[TAM_BUFFER];
 			i = 0;
 			numIntentos = numIntentos - 1;
-			printf("\n%d\t", numero);
-			//Tiene que enviar si es mayor, menor y el numero de intentos restantes
-			//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
-
+			
 			if(numIntentos == 0){
 				strcpy(mensaje, "375 FALLO");
 				estamosJugando = 0;
@@ -552,7 +543,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
-			//aniadirCRLF(mensaje, TAM_BUFFER);
 			strcat(mensaje, "\r\n");
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER ) {
 				errout(hostname);
@@ -620,11 +610,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			}
 		}
 
-
-
-			/* Send a response back to the client. */
-			//strcat(buf, "\r\n");
-		///if (send(s, buf, TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
 		if(finalizacion == 1){
 			break;
 		}
@@ -650,8 +635,10 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 		 * that this program could easily be ported to a host
 		 * that does require it.
 		 */
+		 
 		printf("Completed %s port %u, %d requests, at %s\n",
 		hostname, ntohs(clientaddr_in.sin_port), reqcnt, (char *) ctime(&timevar));
+		
 }
 
 /*
@@ -692,7 +679,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
     struct hostent *hp;		/* pointer to host info for requested host */
     int nc, errcode;
 	char buf[BUFFERSIZE];
-    struct addrinfo hints, *res;
+    //struct addrinfo *res;
 	int cc;
 	int addrlen;
 	int status;
@@ -701,11 +688,10 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 	long timevar;
 	int rqnct = 0;
 
-	//Declaraciones para hacer la funcionalidad
-	//Finalizar el bucle ya que quiere terminar xd
+	
 	int finalizacion = 0;
 	int i=0;
-	//Declaro variables para ver si se puede entrar en los casos o no
+
 	int mensajeHola = 0; //En el momento que entre en Hola ya no podria entrar mas, es el primer mensaje del servidor
 	int estamosJugando = 0;
 	int primerMensaje = 0;
@@ -741,29 +727,30 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
 
-
+	numIntentos = 0;
 	int numeroIntentosRec;
+
 	while(1){
 		
 
-		char buf[BUFFERSIZE];
+		char buffer[BUFFERSIZE];
 		//Recibe la respuesta y despues el servidor hace lo necesario
-		int numIntentos = 0;
+		
 		while (numIntentos < RETRIES) {
-	    	//alarm(TIMEOUT);
+	    	alarm(TIMEOUT);
 			//Esperar
 			int cc;
-        	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen)
+        	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&clientaddr_in, &addrlen);
 			if(cc == -1){
 				//Implica que una señal interrumpió el rcvfrom
-				/*if(errno == EINTR){
+				if(errno == EINTR){
 					numIntentos = numIntentos + 1;
 					fprintf(stderr, "Intento %d --> Intentos %d", numIntentos, RETRIES);
-				}*/
-				//{
+				}
+				else{
 					printf("Imposibilidad de llegar el mensaje");
 					exit(1);
-				//}
+				}
         	} 
         	else {
             	alarm(0);	
@@ -771,27 +758,19 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
             	}
 			
 		}
-		printf("S: %s",buffer);
 		
-		printf("%s",buf);
 
-
-
-		sleep(0);
-		eliminarCRLF(buf);
+		eliminarCRLF(buffer);
 		//Añadir al log		
-		if(aniadirAlLog(buf, clientaddr_in, hostname, "UDP", 1) == -1){
+		if(aniadirAlLog(buffer, clientaddr_in, hostname, "UDP", 1) == -1){
 			perror("No se ha podido añadir la respuesta al fichero");
 		}
 
-		
-		//Empezamos funcionalidad del programa
 
-
-		tipo = comprobarMensaje(buf);
+		tipo = comprobarMensaje(buffer);
 
 		if(tipo == 2){
-			numero = obtenerNumero(buf);
+			numero = obtenerNumero(buffer);
 			if(numero <= -1){
 				tipo = 5;
 			}
@@ -828,11 +807,8 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			char numStr[BUFFERSIZE];
 			char mensaje[BUFFERSIZE];
 			i = 0;
-			numIntentos = numIntentos - 1;
-			//printf("\n%d\t", valorAResolver);
-			//printf("\n%d\t", numero);
-			//Tiene que enviar si es mayor, menor y el numero de intentos restantes
-			//Si se acierta se enviará una respuesta de aviso --> Tenemos un struct en el que esta el mensaje y el numero separados
+			
+			
 
 			if(numIntentos == 0){
 				strcpy(mensaje, "375 FALLO");
@@ -862,6 +838,8 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 					}
 			}
 			
+			numIntentos = numIntentos - 1;
+			
 			//Añadir al log		
 			if(aniadirAlLog(mensaje, myaddr_in, hostname, "UDP", 0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
@@ -876,12 +854,11 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
          	}
 			
 
-		}
-		//Cliente "+"
+		}//Cliente "+"
 		else if(tipo == 3 && (estamosJugando == 0 || numIntentos == 0) && mensajeHola == 1){	//Solo se mete si numero de errores = 0 ooooo hemos terminado){
 			char mensaje[BUFFERSIZE];
 			valorAResolver = calcularNumeroRandom();		//Numero random entre 2 valores, en este caso, 0 y 100
-			numIntentos = 5;
+			numIntentos = 4;
 			estamosJugando = 1;
 			char numStr[10];
 
@@ -906,7 +883,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		}
 		//Cliente "ADIOS"
 		else if(tipo == 4){
-			//char mensaje[BUFFERSIZE];;
+			char mensaje[BUFFERSIZE];;
 			//strcpy(mensaje, "221 Cerrando el Servicio");
 
 			//Añadir al log		
@@ -914,7 +891,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
-			strcat(mensaje, "\r\n");
+			//strcat(mensaje, "\r\n");
 			if ( nc = sendto (s, "221 Cerrando el Servicio\r\n", BUFFERSIZE,
 				0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
          		perror("serverUDP");
@@ -927,13 +904,12 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		}
 		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
 		else{
-
+			char mensaje[BUFFERSIZE];
 			//Añadir al log		
 			if(aniadirAlLog("500 Error de sintaxis", myaddr_in, hostname, "UDP", 0) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
-			strcat(mensaje, "\r\n");
 			if ( nc = sendto (s,  "500 Error de sintaxis\r\n", BUFFERSIZE,
 					0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
          		perror("serverUDP");
@@ -945,7 +921,8 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		if(finalizacion == 1){
 			break;
 		}
-	}  
+	} 
+	 
 	printf("Completed %s port %u, at %s\n",
 		hostname, ntohs(clientaddr_in.sin_port),(char *) ctime(&timevar));
 

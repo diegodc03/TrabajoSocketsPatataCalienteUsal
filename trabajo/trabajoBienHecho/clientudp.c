@@ -179,7 +179,7 @@ int clientUDP(char **argv, int argc )
 	FILE *f;
 	if(argc == 4){
 
-		printf("%s", argv[3]);
+		//printf("%s", argv[3]);
 		f = fopen(argv[3], "r");
 		if(f == NULL){
 			perror("Error al abrir el archivo");
@@ -205,16 +205,16 @@ int clientUDP(char **argv, int argc )
         	cc = recvfrom (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in, &addrlen);
 			if(cc == -1){
 				//Implica que una señal interrumpió el rcvfrom
-				/*
+				
 				if(errno == EINTR){
 					numIntentos = numIntentos + 1;
 					fprintf(stderr, "Intento %d --> Intentos %d", numIntentos, RETRIES);
 				}
-				*/
-				//else{
+				
+				else{
 					printf("Imposibilidad de llegar el mensaje");
 					exit(1);
-				//}
+				}
         	} 
         	else {
             	alarm(0);	
@@ -222,7 +222,7 @@ int clientUDP(char **argv, int argc )
             	}
 			
 		}
-		printf("S: %s",buffer);
+		//printf("S: %s",buffer);
 
 		
 		//Escribimos el mensaje al servidor.
@@ -231,7 +231,7 @@ int clientUDP(char **argv, int argc )
 
 		}else{
 
-			printf("C: ");
+			//printf("C: ");
 
 			//Respuesta
 			if(argc == 4){
@@ -250,7 +250,7 @@ int clientUDP(char **argv, int argc )
 				}
 			}
 
-			printf("%s", buffer);
+			//printf("%s", buffer);
 
 
 			
@@ -279,5 +279,3 @@ int clientUDP(char **argv, int argc )
 	
 		
 }
-
-

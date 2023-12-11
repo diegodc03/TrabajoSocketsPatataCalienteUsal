@@ -46,10 +46,10 @@ int main(int argc, char **argv)
     }
 
     if(strcmp(argv[2], "TCP") == 0){
-        printf("Estoy en TCP");
+        //printf("Estoy en TCP");
         clienTCP(argv, argc);
     }else if(strcmp(argv[2], "UDP") == 0){
-        printf("Estoy en UDP");
+        //printf("Estoy en UDP");
         clientUDP(argv, argc);
     }
 

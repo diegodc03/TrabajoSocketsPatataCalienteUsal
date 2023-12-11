@@ -85,7 +85,7 @@ int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnv
 	
 		
 	if(comprobacion == 1){
-		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta enviada al servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE CLIENTE: %s\n", 
+		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d:%02d:%02d || Respuesta enviada al servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE CLIENTE: %s\n", 
 		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
 	}else{
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta recibida del servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE SERVIDOR: %s\n", 
@@ -109,7 +109,7 @@ int calcularNumeroRandom(){
 
     // Generar el número aleatorio y ajustarlo al rango
     int numeroAleatorio = rand() % rango + numMin;
-	printf("\t%d\n", numeroAleatorio);
+	//printf("\t%d\n", numeroAleatorio);
 	return numeroAleatorio;
 }
 

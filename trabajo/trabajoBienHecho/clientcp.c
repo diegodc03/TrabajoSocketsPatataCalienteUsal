@@ -224,9 +224,9 @@ char *argv[];
 		}
 
 		//Añadir al log		
-			if(aniadirAlLog(buf, myaddr_in, hostName, "TCP", 1) == -1){
-				perror("No se ha podido añadir la respuesta al fichero");
-			}		
+			//if(aniadirAlLog(buf, myaddr_in, hostName, "TCP", 1) == -1){
+			//	perror("No se ha podido añadir la respuesta al fichero");
+			//}		
 
 		strcat(buf,"\r\n");
 		if(send(s,buf,TAM_BUFFER,0)!=TAM_BUFFER){

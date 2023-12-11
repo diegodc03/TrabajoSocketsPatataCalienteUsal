@@ -186,15 +186,33 @@ char *argv[];
 	while(finalizacion == 0){
 		
 		
-		ret = recibir(s, buffer, BUFFERSIZE, &servaddr_in, &addrlen);
-		printf("S: %s",buffer);
-
-		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
-		if(strcmp(buffer, "220 Servicio Preparado\r\n")== 0){
-			//printf("S: %s\n",buffer);
+		//ret = recibir(s, buffer, BUFFERSIZE, &servaddr_in, &addrlen);
+		int n_retry;
+		n_retry=RETRIES;
+		while (n_retry > 0) {
+			//RESET(buffer, BUFFERSIZE);		
+			/* Set up a timeout so I don't hang in case the packet
+		 	* gets lost.  After all, UDP does not guarantee
+		 	* delivery.
+		 	*/
+	    	alarm(TIMEOUT);
+		
+			// Wait for the reply to come in. 
+		
+        	if (recvfrom (s, buffer, BUFFERSIZE, 0,
+				(struct sockaddr *)&servaddr_in, &addrlen) == -1) {
+					n_retry = n_retry -1;
+					printf("Unable to get response from");
+					exit(1); 
+                
+        	} 
+        	else {
+            	alarm(0);	
+				break;
+            	}
 			
-			//aux = aniadirAlLog("cliente.txt", "220 Servicio Preparado\n");
 		}
+		printf("S: %s",buffer);
 
 		
 		//Escribimos el mensaje al servidor.
@@ -209,20 +227,17 @@ char *argv[];
 			if(len > 0 && buffer[len-1] == '\n'){
 				buffer[len-1] = '\0';
 			}
-
-			//Añadir al log		
-			if(aniadirAlLog(buffer, myaddr_in, hostname, "UDP", 1) == -1){
-				perror("No se ha podido añadir la respuesta al fichero");
-			}
-
+			
 			strcat(buffer,"\r\n");
 			/* Send the request to the nameserver. */
-        	if (sendto (s, buffer, BUFFERSIZE, 0, (struct sockaddr *)&servaddr_in,
+        	if (sendto (s, buffer, BUFFERSIZE-2, 0, (struct sockaddr *)&servaddr_in,
 					sizeof(struct sockaddr_in)) == -1) {
         		perror(argv[0]);
         		fprintf(stderr, "%s: unable to send request\n", argv[0]);
     			exit(1);
-    		}
+    		}else{
+				//printf("envio correcto");
+			}
 		}
 
 		

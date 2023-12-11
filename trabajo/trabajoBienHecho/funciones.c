@@ -54,7 +54,7 @@ int obtenerNumero(char *cadena){
 
 
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
-int aniadirAlLog( char *cadena, struct sockaddr_in seraddr_in, char *dondeEnvio, char* protocolo, int comprobacion){
+int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio, char* protocolo, int comprobacion){
 	
 	FILE *Fich;
 	long timevar;
@@ -77,27 +77,19 @@ int aniadirAlLog( char *cadena, struct sockaddr_in seraddr_in, char *dondeEnvio,
 	char ipCliente[INET_ADDRSTRLEN]; // Buffer para almacenar la dirección IP del cliente
 
     // Convierte la dirección IP a una cadena
-    if (inet_ntop(AF_INET, &seraddr_in.sin_addr, ipCliente, INET_ADDRSTRLEN) == NULL) {
+    if (inet_ntop(AF_INET, &clientaddr_in.sin_addr, ipCliente, INET_ADDRSTRLEN) == NULL) {
         perror("inet_ntop falló");
         return -1; // O manejar el error como prefieras
     }
 
 	
-	//Añadios el mensaje, pero el primer mensaje solo es la hora
-	/*
-	if(valor == 1){
-		fprintf(Fich, "HORA: %02d:%02d:%02d | \t", hora, minutos, segundos);
-		fprintf(Fich, "RESPUESTA SERVIDOR: %s\n", cadena);
-	} else{
-		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
-	}
-	*/		
+		
 	if(comprobacion == 1){
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta enviada al servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE CLIENTE: %s\n", 
-		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(seraddr_in.sin_port), cadena);
+		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
 	}else{
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta recibida del servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE SERVIDOR: %s\n", 
-		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(seraddr_in.sin_port), cadena);
+		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
 	
 	}
 	

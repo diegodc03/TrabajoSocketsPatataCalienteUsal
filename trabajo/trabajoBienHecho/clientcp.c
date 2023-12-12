@@ -1,4 +1,12 @@
 
+/*
+** Fichero: clientcp.c
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
+
 #include "clientcp.h"
 
 
@@ -83,36 +91,20 @@ int clienTCP(char **argv, int argc)
 	 * that this program could easily be ported to a host
 	 * that does require it.
 	 */
-	printf("Connected to %s on port %u at %s",
-			argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
+	//printf("Connected to %s on port %u at %s",
+	//		argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
 	
 	FILE *f;
 	if(argc == 4){
-		//Introduzco en un array todas las tespuestas
-		//printf("%s", argv[3]);
+		
 		f = fopen(argv[3], "r");
 		if(f == NULL){
 			perror("Error al abrir el archivo");
 			return 1;
 		}
 	}
-
-	//Fichero de escritura
-	FILE *e;
-	if(argc == 4){
-		char mensaje[TAM_BUFFER];
-		strcat(mensaje, argv[3]);
-		strcat(mensaje, "creadoTXT");
-		e = fopen(mensaje,"w");
-		if(e == NULL){
-			perror("Error al abrir el archivo");
-			return 1;
-		}
-	}
-
 	
-		
 
 		/* Now, start receiving all of the replys from the server.
 		 * This loop will terminate when the recv returns zero,
@@ -163,23 +155,7 @@ int clienTCP(char **argv, int argc)
 
 		//Eliminamos CRLF
 		aux = eliminarCRLF(buf);
-		
-/*
-		//EMPEZAMOS FUNCIONALIDAD DEL PROGRAMA
-		if(strcmp(buf, "220 Servicio Preparado")== 0){
-			printf("S: %s\n",buf);
-		}
-		else if(strcmp(buf,"221 Cerrando el Servicio") == 0){
-			printf("S: %s\n",buf);
-			break;
-		}else{
-
-			//Respuesta del servidor
-			//printf("S: %s\n",buf);
-			
-		}
-		//printf("C: ");
-*/	
+	
 		
 		//En vez de leer de pantalla, leo de fichero
 		if(argc == 4){
@@ -187,8 +163,6 @@ int clienTCP(char **argv, int argc)
 			if(fgets(buf, TAM_BUFFER-2, f) == NULL){
 				return 1;
 			}
-			fprintf(e, "%s\n", buf);
-			
 
 		}else{
 			//Respuesta del cliente manualmente
@@ -210,9 +184,8 @@ int clienTCP(char **argv, int argc)
 
 	}
 	fclose(f);
-	fclose(e);
     /* Print message indicating completion of task. */
-	time(&timevar);
-	printf("All done at %s", (char *)ctime(&timevar));
+	//time(&timevar);
+	//printf("All done at %s", (char *)ctime(&timevar));
 }
 

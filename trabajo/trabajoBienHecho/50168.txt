@@ -1,0 +1,16 @@
+Ordenes UDP en puerto 50168
+220 Servicio Preparado
+250 Adivina el valor entre 0 y 100#4
+500 Error de sintaxis
+354 MENOR#3
+354 MENOR#2
+354 MENOR#1
+500 Error de sintaxis
+375 FALLO
+500 Error de sintaxis
+500 Error de sintaxis
+250 Adivina el valor entre 0 y 100#4
+500 Error de sintaxis
+354 MENOR#3
+354 MENOR#2
+221 Cerrando el servicio

@@ -1,4 +1,11 @@
 /*
+** Fichero: cliente.c
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
+/*
  *			M A I N
  *
  *	This routine is the client which request service from the remote.

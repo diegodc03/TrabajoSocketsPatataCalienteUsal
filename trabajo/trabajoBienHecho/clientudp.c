@@ -1,3 +1,11 @@
+
+/*
+** Fichero: clientudp.c
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
 /*
  *			C L I E N T U D P
  *
@@ -123,7 +131,7 @@ int clientUDP(char **argv, int argc )
              * that this program could easily be ported to a host
              * that does require it.
              */
-    printf("Connected to %s on port %u at %s", argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
+    //printf("Connected to %s on port %u at %s", argv[1], ntohs(myaddr_in.sin_port), (char *) ctime(&timevar));
 
 	/* Set up the server address. */
 	servaddr_in.sin_family = AF_INET;
@@ -177,7 +185,6 @@ int clientUDP(char **argv, int argc )
 	FILE *f;
 	if(argc == 4){
 
-		//printf("%s", argv[3]);
 		f = fopen(argv[3], "r");
 		if(f == NULL){
 			perror("Error al abrir el archivo");
@@ -185,28 +192,12 @@ int clientUDP(char **argv, int argc )
 		}
 	}
 
-	//Fichero de escritura
-	FILE *k;
-	if(argc == 4){
-		char mensaje[TAM_BUFFER];
-		strcat(mensaje, argv[3]);
-		strcat(mensaje, "creadoTXT");
-		k = fopen(mensaje,"w");
-		if(k == NULL){
-			perror("Error al abrir el archivo1");
-			return 1;
-		}
-	}
-
-
-
 
 	int ret;
 	int finalizacion = 0;
 
 	while(finalizacion == 0){
 		
-		//printf("hla");
 		//Recibe
 		int numIntentos = 0;
 		while (numIntentos < RETRIES) {
@@ -235,16 +226,12 @@ int clientUDP(char **argv, int argc )
 		if(numIntentos == RETRIES){
 			break;
 		}
-		//printf("S: %s",buffer);
 
-		
 		//Escribimos el mensaje al servidor.
 		if(strcmp(buffer, "221 Cerrando el Servicio\r\n")== 0){
 			finalizacion = 1;
 
 		}else{
-
-			//printf("C: ");
 
 			//Respuesta
 			if(argc == 4){
@@ -253,8 +240,6 @@ int clientUDP(char **argv, int argc )
 					return 1;
 				}
 
-				fprintf(k, "%s",buffer);
-				//printf("dsfsdfd");
 			
 			}else if(argc == 3){
 				//Respuesta del cliente
@@ -263,13 +248,7 @@ int clientUDP(char **argv, int argc )
 				if(len > 0 && buffer[len-1] == '\n'){
 					buffer[len-1] = '\0';
 				}
-			}
-
-			//			printf("%s", buffer);
-
-
-			
-			
+			}			
 			
 			strcat(buffer,"\r\n");
 			/* Send the request to the nameserver. */
@@ -291,8 +270,7 @@ int clientUDP(char **argv, int argc )
 
 	}	
 	fclose(f);
-	fclose(k);
-	printf("All done at %s", (char *)ctime(&timevar));
+	//printf("All done at %s", (char *)ctime(&timevar));
 	
 		
 }

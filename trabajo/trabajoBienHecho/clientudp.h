@@ -1,4 +1,11 @@
 /*
+** Fichero: clientudp.h
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
+/*
  *			C L I E N T U D P
  *
  *	This is an example program that demonstrates the use of
@@ -41,5 +48,4 @@ extern int errno;
 #define MAXHOST 128
 
 
-int recibir(int , char *, int , struct sockaddr * , int *);
 int clientUDP(char **argv, int argc);

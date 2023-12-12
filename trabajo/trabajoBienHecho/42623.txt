@@ -1,0 +1,7 @@
+Ordenes UDP en puerto 42623
+220 Servicio Preparado
+500 Error de sintaxis
+500 Error de sintaxis
+500 Error de sintaxis
+500 Error de sintaxis
+221 Cerrando el servicio

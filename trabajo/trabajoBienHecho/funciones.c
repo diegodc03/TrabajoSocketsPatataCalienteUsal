@@ -1,5 +1,11 @@
 
+/*
 
+** Fichero: funciones.c
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
 
 
 #include <stdio.h>
@@ -132,52 +138,6 @@ int eliminarCRLF(char *string){
 	}
 }
 
-
-
-
-int recibir(int s, char *buffer, int size, struct sockaddr *servaddr_in, int *addrlen){
-	int n_retry;
-	n_retry=RETRIES;
-	while (n_retry > 0) {
-		//RESET(buffer, BUFFERSIZE);		
-		/* Set up a timeout so I don't hang in case the packet
-		 * gets lost.  After all, UDP does not guarantee
-		 * delivery.
-		 */
-	    alarm(TIMEOUT);
-		
-		// Wait for the reply to come in. 
-		
-        if (recvfrom (s, buffer, size, 0,
-			(struct sockaddr *)servaddr_in, addrlen) == -1) {
-    		if (errno == EINTR) {
-    			/* Alarm went off and aborted the receive.
-    			 * Need to retry the request if we have
-    			 * not already exceeded the retry limit.
-    			 */
- 			    printf("attempt %d (retries %d).\n", n_retry, RETRIES);
-				n_retry--; 
-                    } 
-            else  {
-				printf("Unable to get response from");
-				exit(1); 
-                }
-        } 
-        else {
-            alarm(0);	
-			break;
-            }
-  
-		
-    }	
-	if (n_retry == 0) {
-       	printf("Unable to get response from");
-       	
-		return -1;
-    }
-	return 0;
-
-}
 
 
 

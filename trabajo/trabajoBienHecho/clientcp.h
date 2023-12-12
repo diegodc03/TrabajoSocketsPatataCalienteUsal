@@ -1,3 +1,14 @@
+
+/*
+** Fichero: clientcp.h
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
+
+
+
 /*
  *			C L I E N T C P
  *

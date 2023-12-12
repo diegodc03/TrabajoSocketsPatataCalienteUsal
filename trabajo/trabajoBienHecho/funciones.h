@@ -1,4 +1,12 @@
 
+/*
+
+** Fichero: funciones.h
+** Autores:
+** DIEGO DE CASTRO MERILLAS DNI 71043687e
+** 
+*/
+
 #ifndef __FUNCIONES__
 #define __FUNCIONES__
 
@@ -47,8 +55,5 @@ int aniadirAlLog(char *, struct sockaddr_in, char*, char*, int, unsigned int);
 int calcularNumeroRandom();
 
 int eliminarCRLF(char *);
-
-int recibir(int , char *, int , struct sockaddr * , int *);
-
 
 #endif // !__FUNCIONES__

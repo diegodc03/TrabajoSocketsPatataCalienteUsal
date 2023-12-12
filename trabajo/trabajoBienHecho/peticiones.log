@@ -268,3 +268,513 @@
 [FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 13:37:29 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
 [FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 13:37:29 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 49862 || MENSAJE CLIENTE: ADIOS
 [FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 13:37:29 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 48944 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 48944 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 48944 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 48944 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 48944 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:18:02 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: HELO
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37954 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37958 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37958 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37958 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37958 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37958 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 220
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPU 34
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 37970 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: HELO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 41933 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 42752 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 42752 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 42752 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 42752 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 42752 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 220
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPU 34
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 55061 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:34:21 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+
+
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: HELO
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51484 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51488 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51488 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51488 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51488 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51488 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 220
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPU 34
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: HELO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 51504 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 52537 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 35938 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 35938 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 35938 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 35938 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 35938 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 220
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPU 34
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 58509 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 16:35:30 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: HELO
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36788 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36790 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36790 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36790 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36790 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36790 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: HOLA
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA no lo se
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 67
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 220
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 51
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: +
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPU 34
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 110
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: RESPUESTA 554
+
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 36796 || MENSAJE CLIENTE: ADIOS
+
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: TCP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: HELO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 54801 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 59895 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 59895 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 59895 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 59895 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 59895 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 220 Servicio Preparado
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: HOLA
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA no lo se
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 67
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 220
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#1
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 51
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 375 FALLO
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: +
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 250 Adivina el valor entre 0 y 100#4
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPU 34
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 500 Error de sintaxis
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 110
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#3
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: RESPUESTA 554
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 354 MENOR#2
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta enviada al servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 46017 || MENSAJE CLIENTE: ADIOS
+[FECHA Y HORA DEL COMIENZO]:  12-12-2023 | 17:22:46 || Respuesta recibida del servidor: localhost || IP: 127.0.0.1 || PROTOCOLO: UDP || PUERTO: 39004 || MENSAJE SERVIDOR: 221 Cerrando el Servicio

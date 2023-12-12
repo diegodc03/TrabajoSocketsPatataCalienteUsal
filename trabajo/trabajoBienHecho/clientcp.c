@@ -46,24 +46,24 @@ int clienTCP(char **argv, int argc)
  	 /* esta funci�n es la recomendada para la compatibilidad con IPv6 gethostbyname queda obsoleta*/
     errcode = getaddrinfo (argv[1], NULL, &hints, &res); 
     if (errcode != 0){
-			/* Name was not found.  Return a
-			 * special value signifying the error. */
-		fprintf(stderr, "%s: No es posible resolver la IP de %s\n",
-				argv[0], argv[1]);
+		/* Name was not found.  Return a
+		 * special value signifying the error. */
+		fprintf(stderr, "%s: No es posible resolver la IP de %s\n", argv[0], argv[1]);
 		exit(1);
-        }
+    }
     else {
 		/* Copy address of host */
 		servaddr_in.sin_addr = ((struct sockaddr_in *) res->ai_addr)->sin_addr;
-	    }
+	}
     freeaddrinfo(res);
 
     /* puerto del servidor en orden de red*/
 	servaddr_in.sin_port = htons(PUERTO);
 
-		/* Try to connect to the remote server at the address
-		 * which was just built into peeraddr.
-		 */
+	/* Try to connect to the remote server at the address
+	 * which was just built into peeraddr.
+	 */
+	
 	if (connect(s, (const struct sockaddr *)&servaddr_in, sizeof(struct sockaddr_in)) == -1) {
 		perror(argv[0]);
 		fprintf(stderr, "%s: unable to connect to remote\n", argv[0]);
@@ -76,6 +76,7 @@ int clienTCP(char **argv, int argc)
 		 * because getsockname returns the actual length
 		 * of the address.
 		 */
+
 	addrlen = sizeof(struct sockaddr_in);
 	if (getsockname(s, (struct sockaddr *)&myaddr_in, &addrlen) == -1) {
 		perror(argv[0]);
@@ -104,16 +105,13 @@ int clienTCP(char **argv, int argc)
 			return 1;
 		}
 	}
-	
-
 		/* Now, start receiving all of the replys from the server.
 		 * This loop will terminate when the recv returns zero,
 		 * which is an end-of-file condition.  This will happen
 		 * after the server has sent all of its replies, and closed
 		 * its end of the connection.
 		 */
-
-
+	
 	int aux;
 	char hostName[BUFFERSIZE];
 
@@ -121,6 +119,20 @@ int clienTCP(char **argv, int argc)
 	int result = getnameinfo((struct sockaddr *)&myaddr_in, addrlen, hostName, sizeof(hostName), NULL, 0, 0);
 
 	 int cont;
+
+
+	//Fichero de escritura
+	FILE *e;
+	char mensaje[TAM_BUFFER];
+	snprintf(mensaje, TAM_BUFFER, "%d.txt",ntohs(myaddr_in.sin_port));
+	e = fopen(mensaje,"w");
+	if(e == NULL){
+		perror("Error al abrir el archivo");
+		exit(1);
+	}
+	
+	fprintf(e,"Ordenes TCP en puerto %u\n", ntohs(myaddr_in.sin_port));
+
 
 
 	while (i = recv(s, buf, TAM_BUFFER, 0)) {
@@ -155,7 +167,8 @@ int clienTCP(char **argv, int argc)
 
 		//Eliminamos CRLF
 		aux = eliminarCRLF(buf);
-	
+
+		fprintf(e, "%s\n",buf);
 		
 		//En vez de leer de pantalla, leo de fichero
 		if(argc == 4){
@@ -184,6 +197,7 @@ int clienTCP(char **argv, int argc)
 
 	}
 	fclose(f);
+	fclose(e);
     /* Print message indicating completion of task. */
 	//time(&timevar);
 	//printf("All done at %s", (char *)ctime(&timevar));

@@ -1,4 +1,4 @@
-Ordenes TCP en puerto 41202
+Ordenes UDP en puerto 46017
 220 Servicio Preparado
 250 Adivina el valor entre 0 y 100#4
 500 Error de sintaxis
@@ -13,4 +13,4 @@ Ordenes TCP en puerto 41202
 500 Error de sintaxis
 354 MENOR#3
 354 MENOR#2
-221 Cerrando el Servicio
+221 Cerrando el servicio

@@ -1,7 +1,7 @@
-Ordenes UDP en puerto 42623
+Ordenes TCP en puerto 36790
 220 Servicio Preparado
 500 Error de sintaxis
 500 Error de sintaxis
 500 Error de sintaxis
 500 Error de sintaxis
-221 Cerrando el servicio
+221 Cerrando el Servicio

@@ -29,14 +29,14 @@
 #define PUERTO 17278
 #define ADDRNOTFOUND	0xffffffff	/* return address for unfound host */
 #define BUFFERSIZE	516	/* maximum size of packets to be received */
-#define TAM_BUFFER 10
+#define TAM_BUFFER 516
 #define MAXHOST 128
 
 extern int errno;
 
 int comprobarMensaje(char *);
 int obtenerNumero(char *);
-int aniadirAlLog(char *, struct sockaddr_in, char* );
+int aniadirAlLog(char *, struct sockaddr_in, char*, char*);
 int calcularNumeroRandom();
 void aniadirCRLF(char *, int );
 int eliminarCRLF(char *string);
@@ -637,7 +637,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
         return;
     }
 	//Añadir al log		
-	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname) == -1){
+	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname, "UDP") == -1){
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
 	
@@ -692,11 +692,11 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 			estamosJugando = 1;
 			mensajeHola = 1;
 
-			/*
+			
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, 1) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP") == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
-			}*/
+			}
 			//aniadirCRLF(mensaje, BUFFERSIZE);
 			
 			strcat(mensaje, "\r\n");
@@ -744,11 +744,11 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 					estamosJugando = 0;
 					}
 			}
-
+	
 			//Añadir al log		
-			//if(aniadirAlLog(mensaje, 1) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP") == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 
 			//aniadirCRLF(mensaje, BUFFERSIZE);
 			strcat(mensaje, "\r\n");
@@ -758,7 +758,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
          		printf("%s: sendto error\n", "serverUDP");
          		return;
          	}
-			printf("%s\n", mensaje);
+			
 
 		}
 		//Cliente "+"
@@ -774,9 +774,9 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 			strcat(mensaje, numStr);
 
 			//Añadir al log		
-			//if(aniadirAlLog(mensaje, 1) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP") == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 					
 			//aniadirCRLF(mensaje, BUFFERSIZE);
 			strcat(mensaje, "\r\n");
@@ -795,9 +795,9 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 			//strcpy(mensaje, "221 Cerrando el Servicio");
 
 			//Añadir al log		
-			//if(aniadirAlLog(mensaje, 1) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//}
+			if(aniadirAlLog("221 Cerrando el Servicio", clientaddr_in, hostname, "UDP") == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 			
 			//aniadirCRLF(mensaje, TAM_BUFFER);
 			//strcat(mensaje, "\r\n");
@@ -814,17 +814,17 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in)
 		// Cliente ESCRIBE MAL LA RESPUESTA, DEVUELVE ERROR DE SINTAXIS
 		else{
 			
-			char mensaje[BUFFERSIZE];
-			strcpy(mensaje, "500 Error de sintaxis\r\n");
+			//char mensaje[BUFFERSIZE];
+			//strcpy(mensaje, "500 Error de sintaxis\r\n");
 
 			//Añadir al log		
-			//if(aniadirAlLog(mensaje, 1) == -1){
-			//	perror("No se ha podido añadir la respuesta al fichero");
-			//MAKE}
+			if(aniadirAlLog("500 Error de sintaxis", clientaddr_in, hostname, "UDP") == -1){
+				perror("No se ha podido añadir la respuesta al fichero");
+			}
 
 			//aniadirCRLF(mensaje, BUFFERSIZE);
-			strcat(mensaje, "\r\n");
-			if ( nc = sendto (s, mensaje, BUFFERSIZE,
+			//strcat(mensaje, "\r\n");
+			if ( nc = sendto (s,  "500 Error de sintaxis\r\n", BUFFERSIZE,
 					0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
          		perror("serverUDP");
          		printf("%s: sendto error\n", "serverUDP");
@@ -878,7 +878,7 @@ int obtenerNumero(char *cadena){
 }
 
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
-int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio){
+int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio, char* protocolo){
 	
 	FILE *Fich;
 	long timevar;
@@ -916,8 +916,8 @@ int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnv
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | ", ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900);
 	}
 	*/			
-	fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta enviada a: %s|| IP: %s || PROTOCOLO: UDP || PUERTO: %u || MENSAJE SERVIDOR: %s", 
-	ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, ntohs(clientaddr_in.sin_port), cadena);
+	fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta enviada a: %s|| IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE SERVIDOR: %s\n", 
+	ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
 	
 
 	fclose(Fich);

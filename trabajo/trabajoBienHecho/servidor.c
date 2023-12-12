@@ -38,7 +38,6 @@ char *argv[];
 
     int s_TCP, s_UDP;		/* connected socket descriptor */
     int ls_TCP, ls_UDP;				/* listen socket descriptor */
-    
     int cc;				    /* contains the number of bytes read */
      
     struct sigaction sa = {.sa_handler = SIG_IGN}; /* used to ignore SIGCHLD */
@@ -54,6 +53,20 @@ char *argv[];
     
     struct sigaction vec;
 
+
+	int semAforo; // Clave para el semáforo, debe ser única
+	semAforo = semget(IPC_PRIVATE, 1, IPC_CREAT | 0666 );
+	if (semAforo == -1) {
+    	perror("semget");
+    	exit(EXIT_FAILURE);
+	}
+
+	if(semctl(semAforo, 0, SETVAL, 1) == -1){
+		exit(-1);
+	}
+
+
+
 		/* Create the listen socket. */
 	ls_TCP = socket (AF_INET, SOCK_STREAM, 0);
 	if (ls_TCP == -1) {
@@ -61,6 +74,7 @@ char *argv[];
 		fprintf(stderr, "%s: unable to create socket TCP\n", argv[0]);
 		exit(1);
 	}
+
 	/* clear out address structures */
 	memset ((char *)&myaddr_in, 0, sizeof(struct sockaddr_in));
    	memset ((char *)&clientaddr_in, 0, sizeof(struct sockaddr_in));
@@ -127,7 +141,6 @@ char *argv[];
 	    }
 
 
-
 		/* Now, all the initialization of the server is
 		 * complete, and any user errors will have already
 		 * been detected.  Now we can fork the daemon and
@@ -142,6 +155,7 @@ char *argv[];
 		 */
 	setpgrp();
 
+	
 	switch (fork()) {
 	case -1:		/* Unable to fork, for some reason. */
 		perror(argv[0]);
@@ -202,7 +216,7 @@ char *argv[];
                 }
             }
            else { 
-
+				semwait(0);
                 /* Comprobamos si el socket seleccionado es el socket TCP */
                 if (FD_ISSET(ls_TCP, &readmask)) {
                     /* Note that addrlen is passed as a pointer
@@ -218,10 +232,21 @@ char *argv[];
     				s_TCP = accept(ls_TCP, (struct sockaddr *) &clientaddr_in, &addrlen);
     				if (s_TCP == -1) 
 						exit(1);
-    			
+						
+					//Declaramos un semádoro para evitar la concurrencia de la aplicacion
+					//int sem_id;
+					
+
+					if (semctl(semAforo,0,SETVAL,1) == -1){
+						perror("No se ha podido controlar");
+					}			
+	
+					
+					
 					switch (fork()) {
         				case -1:	/* Can't fork, just exit. */
-        					exit(1);
+        					
+							exit(1);
         				case 0:		/* Child process comes here. */
                 			close(ls_TCP); /* Close the listen socket inherited from the daemon. */
         					serverTCP(s_TCP, clientaddr_in, myaddr_in);
@@ -245,7 +270,8 @@ char *argv[];
 		  
 		  		/* Comprobamos si el socket seleccionado es el socket UDP */
           		if (FD_ISSET(ls_UDP, &readmask)) {
-
+					
+					
                 	/* This call will block until a new
                 	* request arrives.  Then, it will
                 	* return the address of the client,
@@ -282,6 +308,21 @@ char *argv[];
 					if(numIntentos == RETRIES){
 						break;
 					}
+
+
+					
+					
+					if (semctl(semAforoUDP,0,SETVAL,1) == -1){
+						perror("No se ha podido controlar");
+					}			
+	
+					v_op1.sem_num = 0;
+					v_op1.sem_op = -1;
+					v_op1.sem_flg = SEM_UNDO;
+					if (semop(semAforoUDP, &v_op1, 1) == -1) {    // Ejecutar la operación
+        				perror("semop p");
+        				exit(EXIT_FAILURE);
+    				}
 				
 
 					/* When a new client sends a UDP datagram, his information is stored
@@ -310,7 +351,14 @@ char *argv[];
 
 					switch (fork()) {
 						case -1:	
-							exit(1);
+							v_op1.sem_num = 0;
+							v_op1.sem_op = 1;
+							v_op1.sem_flg = SEM_UNDO; // Operación de señalización
+            				if (semop(semAforoUDP, &v_op1, 1) == -1) {   // Ejecutar la operación
+                				perror("semop v");
+                				exit(EXIT_FAILURE);
+            				}
+            				exit(1);
 							
 						case 0:		/* Child process comes here. */
 									/* Child doesnt need the listening socket */
@@ -323,6 +371,7 @@ char *argv[];
 							close(s_UDP);
 						}
                 }
+				semsignal(0);
           	}
 		}   
 	
@@ -331,7 +380,10 @@ char *argv[];
         /* Cerramos los sockets UDP y TCP */
         close(ls_TCP);
         close(s_UDP);
-    
+		if (semctl(semAforoUDP, 0, IPC_RMID) == -1) {
+    		perror("semctl remove");
+    		exit(EXIT_FAILURE);
+		}
         printf("\nFin de programa servidor!\n");
         
 	default:		/* Parent process comes here. */
@@ -434,19 +486,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 	
 	
 
-	//Fichero de escritura
-	FILE *e;
-	
 	char mensaje[TAM_BUFFER];
-	snprintf(mensaje, TAM_BUFFER, "%d.txt",ntohs(clientaddr_in.sin_port));
-	e = fopen(mensaje,"w");
-	if(e == NULL){
-		perror("Error al abrir el archivo");
-		exit(1);
-	}
-	
-	fprintf(e,"Ordenes TCP en puerto %u\n", ntohs(clientaddr_in.sin_port));
-
 
 	if (send(s, "220 Servicio Preparado\r\n", TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
 	
@@ -454,9 +494,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
-	//aÑADIR AL fichero
-	fprintf(e, "%s\n","220 Servicio Preparado");
-
+	
 
 	while (len = recv(s, buf, TAM_BUFFER, 0)) {
 		if (len == -1) errout(hostname); /* error from recv */
@@ -525,7 +563,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(e, "%s\n",mensaje);
+			
 
 			strcat(mensaje, "\r\n");
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
@@ -570,7 +608,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(e, "%s\n",mensaje);
+		
 
 			strcat(mensaje, "\r\n");
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER ) {
@@ -596,7 +634,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(e, "%s\n",mensaje);
 					
 			//aniadirCRLF(mensaje, TAM_BUFFER);
 			strcat(mensaje,"\r\n");
@@ -614,7 +651,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(e, "%s\n",mensaje);
 
 			strcat(mensaje, "\r\n");
 			if (send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER) {
@@ -634,7 +670,6 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(e, "%s\n",mensaje);
 
 			strcat(mensaje, "\r\n");
 			if(send(s, mensaje, TAM_BUFFER, 0) != TAM_BUFFER){
@@ -658,7 +693,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 		 * the length of time this connection was used.
 		 */
 		close(s);
-		fclose(e);
+		
 		/* Log a finishing message. */
 		time (&timevar);
 		/* The port number must be converted first to host byte
@@ -745,19 +780,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		if (inet_ntop(AF_INET, &(clientaddr_in.sin_addr), hostname, MAXHOST) == NULL)
 			perror(" inet_ntop \n");
 	}
-	
-
-	//Fichero de escritura
-	FILE *k;
-	char mensaje[BUFFERSIZE];
-	snprintf(mensaje, BUFFERSIZE, "%d.txt",ntohs(clientaddr_in.sin_port));
-	k = fopen(mensaje,"w");
-	if(k == NULL){
-		perror("Error al abrir el archivo");
-		exit(1);
-	}
-	
-	fprintf(k,"Ordenes UDP en puerto %u\n", ntohs(clientaddr_in.sin_port));
 
 
 
@@ -772,7 +794,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
-	fprintf(k, "%s\n", "220 Servicio Preparado");
 
 	numIntentos = 0;
 	int numeroIntentosRec;
@@ -845,7 +866,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(k,"%s\n", mensaje);
 			
 			strcat(mensaje, "\r\n");
 			if ( nc = sendto (s, mensaje, BUFFERSIZE,
@@ -894,7 +914,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(k, "%s\n", mensaje);
 
 			strcat(mensaje, "\r\n");
 			if ( nc = sendto (s, mensaje, BUFFERSIZE,
@@ -921,7 +940,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(k, "%s\n", mensaje);
 
 			strcat(mensaje, "\r\n");
 			if ( nc = sendto (s, mensaje, BUFFERSIZE,
@@ -942,7 +960,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			if(aniadirAlLog("221 Cerrando el Servicio", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(k, "%s\n", "221 Cerrando el servicio");
 
 
 			if ( nc = sendto (s, "221 Cerrando el Servicio\r\n", BUFFERSIZE,
@@ -962,7 +979,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			if(aniadirAlLog("500 Error de sintaxis", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
-			fprintf(k, "%s\n", "500 Error de sintaxis");
 
 			if ( nc = sendto (s, "500 Error de sintaxis\r\n", BUFFERSIZE,
 					0, (struct sockaddr *)&clientaddr_in, addrlen) == -1) {
@@ -976,7 +992,6 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			break;
 		}
 	} 
-	 fclose(k);
 	 close(s);
 	//printf("Completed %s port %u, at %s\n",
 	//	hostname, ntohs(clientaddr_in.sin_port),(char *) ctime(&timevar));

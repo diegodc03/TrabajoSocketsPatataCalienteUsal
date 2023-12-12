@@ -1,0 +1,10 @@
+Ordenes TCP en puerto 36788
+220 Servicio Preparado
+500 Error de sintaxis
+250 Adivina el valor entre 0 y 100#4
+500 Error de sintaxis
+354 MENOR#3
+354 MENOR#2
+500 Error de sintaxis
+354 MENOR#1
+221 Cerrando el Servicio

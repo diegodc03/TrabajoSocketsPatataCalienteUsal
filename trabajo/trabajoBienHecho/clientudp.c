@@ -193,6 +193,21 @@ int clientUDP(char **argv, int argc )
 	}
 
 
+	//Fichero de escritura
+	FILE *k;
+	
+	char mensaje[BUFFERSIZE];
+	snprintf(mensaje, BUFFERSIZE, "%d.txt",ntohs(myaddr_in.sin_port));
+	k = fopen(mensaje,"w");
+	if(k == NULL){
+		perror("Error al abrir el archivo");
+		exit(1);
+	}
+	
+	fprintf(k,"Ordenes UDP en puerto %u\n", ntohs(myaddr_in.sin_port));
+
+
+
 	int ret;
 	int finalizacion = 0;
 
@@ -226,7 +241,7 @@ int clientUDP(char **argv, int argc )
 		if(numIntentos == RETRIES){
 			break;
 		}
-
+		fprintf(k, "%s\n", buffer);
 		//Escribimos el mensaje al servidor.
 		if(strcmp(buffer, "221 Cerrando el Servicio\r\n")== 0){
 			finalizacion = 1;
@@ -262,14 +277,10 @@ int clientUDP(char **argv, int argc )
 			}
 		}
 
-		
 	
-
-
-		
-
 	}	
 	fclose(f);
+	fclose(k);
 	//printf("All done at %s", (char *)ctime(&timevar));
 	
 		

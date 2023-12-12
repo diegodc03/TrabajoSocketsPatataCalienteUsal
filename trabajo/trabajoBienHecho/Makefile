@@ -3,7 +3,7 @@ CFLAGS =
 LIBS =
 
 # Aquí se enumeran todos los ejecutables a construir
-PROGS	=	cliente
+PROGS	=	cliente	servidor
 
 all:	$(PROGS)
 

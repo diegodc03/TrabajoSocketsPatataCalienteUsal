@@ -185,6 +185,19 @@ int clientUDP(char **argv, int argc )
 		}
 	}
 
+	//Fichero de escritura
+	FILE *k;
+	if(argc == 4){
+		char mensaje[TAM_BUFFER];
+		strcat(mensaje, argv[3]);
+		strcat(mensaje, "creadoTXT");
+		k = fopen(mensaje,"w");
+		if(k == NULL){
+			perror("Error al abrir el archivo1");
+			return 1;
+		}
+	}
+
 
 
 
@@ -193,7 +206,7 @@ int clientUDP(char **argv, int argc )
 
 	while(finalizacion == 0){
 		
-		
+		//printf("hla");
 		//Recibe
 		int numIntentos = 0;
 		while (numIntentos < RETRIES) {
@@ -218,7 +231,9 @@ int clientUDP(char **argv, int argc )
             	alarm(0);	
 				break;
             	}
-			
+		}
+		if(numIntentos == RETRIES){
+			break;
 		}
 		//printf("S: %s",buffer);
 
@@ -237,7 +252,9 @@ int clientUDP(char **argv, int argc )
 				if(fgets(buffer, BUFFERSIZE-2, f) == NULL){
 					return 1;
 				}
-				
+
+				fprintf(k, "%s",buffer);
+				//printf("dsfsdfd");
 			
 			}else if(argc == 3){
 				//Respuesta del cliente
@@ -248,7 +265,7 @@ int clientUDP(char **argv, int argc )
 				}
 			}
 
-			//printf("%s", buffer);
+			//			printf("%s", buffer);
 
 
 			
@@ -273,6 +290,8 @@ int clientUDP(char **argv, int argc )
 		
 
 	}	
+	fclose(f);
+	fclose(k);
 	printf("All done at %s", (char *)ctime(&timevar));
 	
 		

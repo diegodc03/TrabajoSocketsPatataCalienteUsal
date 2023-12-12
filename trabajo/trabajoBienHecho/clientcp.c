@@ -98,6 +98,19 @@ int clienTCP(char **argv, int argc)
 		}
 	}
 
+	//Fichero de escritura
+	FILE *e;
+	if(argc == 4){
+		char mensaje[TAM_BUFFER];
+		strcat(mensaje, argv[3]);
+		strcat(mensaje, "creadoTXT");
+		e = fopen(mensaje,"w");
+		if(e == NULL){
+			perror("Error al abrir el archivo");
+			return 1;
+		}
+	}
+
 	
 		
 
@@ -165,8 +178,8 @@ int clienTCP(char **argv, int argc)
 			//printf("S: %s\n",buf);
 			
 		}
-		printf("C: ");
-*/		
+		//printf("C: ");
+*/	
 		
 		//En vez de leer de pantalla, leo de fichero
 		if(argc == 4){
@@ -174,6 +187,7 @@ int clienTCP(char **argv, int argc)
 			if(fgets(buf, TAM_BUFFER-2, f) == NULL){
 				return 1;
 			}
+			fprintf(e, "%s\n", buf);
 			
 
 		}else{
@@ -195,7 +209,8 @@ int clienTCP(char **argv, int argc)
 
 
 	}
-
+	fclose(f);
+	fclose(e);
     /* Print message indicating completion of task. */
 	time(&timevar);
 	printf("All done at %s", (char *)ctime(&timevar));

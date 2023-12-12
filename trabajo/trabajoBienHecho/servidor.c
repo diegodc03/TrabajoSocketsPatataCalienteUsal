@@ -638,7 +638,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 		 * that this program could easily be ported to a host
 		 * that does require it.
 		 */
-		 
+		
 		printf("Completed %s port %u, %d requests, at %s\n",
 		hostname, ntohs(clientaddr_in.sin_port), reqcnt, (char *) ctime(&timevar));
 		
@@ -726,7 +726,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
         return;
     }
 	//Añadir al log		
-	if(aniadirAlLog("220 Servicio Preparado", myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
 

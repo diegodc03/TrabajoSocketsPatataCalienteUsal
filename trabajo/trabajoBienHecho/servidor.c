@@ -430,7 +430,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 	if (send(s, "220 Servicio Preparado\r\n", TAM_BUFFER, 0) != TAM_BUFFER) errout(hostname);
 	
 	//Añadir al log	
-	if(aniadirAlLog("220 Servicio Preparado", seraddr_in, hostname, "TCP", 0, puertoServer) == -1){
+	if(aniadirAlLog("220 Servicio Preparado", clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 		perror("No se ha podido añadir la respuesta al fichero");
 	}
 
@@ -498,7 +498,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 
 			
 			//Añadir al log			
-			if(aniadirAlLog(mensaje, seraddr_in , hostname, "TCP",0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -542,7 +542,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			}
 			
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP",0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP",0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -567,7 +567,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 
 				
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 					
@@ -584,7 +584,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			strcpy(mensaje, "221 Cerrando el Servicio");
 
 			//Añadir al log			
-			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 			
@@ -603,7 +603,7 @@ void serverTCP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in serad
 			strcpy(mensaje, "500 Error de sintaxis");
 
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, seraddr_in, hostname, "TCP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "TCP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -764,6 +764,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		
 
 		eliminarCRLF(buffer);
+		
 		//Añadir al log		
 		unsigned int puertoC = ntohs(clientaddr_in.sin_port);
 		if(aniadirAlLog(buffer, clientaddr_in, hostname, "UDP", 1, puertoC) == -1){
@@ -795,7 +796,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 
 			
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 			
@@ -845,7 +846,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			numIntentos = numIntentos - 1;
 			
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -871,7 +872,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			strcat(mensaje, numStr);
 
 			//Añadir al log		
-			if(aniadirAlLog(mensaje, myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+			if(aniadirAlLog(mensaje, clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -891,7 +892,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 			//strcpy(mensaje, "221 Cerrando el Servicio");
 
 			//Añadir al log		
-			if(aniadirAlLog("221 Cerrando el Servicio", myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+			if(aniadirAlLog("221 Cerrando el Servicio", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 
@@ -910,7 +911,7 @@ void serverUDP(int s, struct sockaddr_in clientaddr_in, struct sockaddr_in myadd
 		else{
 			char mensaje[BUFFERSIZE];
 			//Añadir al log		
-			if(aniadirAlLog("500 Error de sintaxis", myaddr_in, hostname, "UDP", 0, puertoServer) == -1){
+			if(aniadirAlLog("500 Error de sintaxis", clientaddr_in, hostname, "UDP", 0, puertoServer) == -1){
 				perror("No se ha podido añadir la respuesta al fichero");
 			}
 

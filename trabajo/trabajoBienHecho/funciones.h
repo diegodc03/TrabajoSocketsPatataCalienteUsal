@@ -42,7 +42,7 @@ int comprobarMensaje(char *);
 
 int obtenerNumero(char *);
 
-int aniadirAlLog(char *, struct sockaddr_in, char*, char*, int );
+int aniadirAlLog(char *, struct sockaddr_in, char*, char*, int, unsigned int);
 
 int calcularNumeroRandom();
 

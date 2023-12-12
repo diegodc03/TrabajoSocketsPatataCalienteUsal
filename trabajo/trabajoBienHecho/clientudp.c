@@ -115,8 +115,6 @@ int clientUDP(char **argv, int argc )
             fprintf(stderr, "%s: unable to read socket address\n", argv[0]);
             exit(1);
     }
-
-
             /* Print out a startup message for the user. */
     time(&timevar);
             /* The port number must be converted first to host byte
@@ -167,7 +165,7 @@ int clientUDP(char **argv, int argc )
 
 	char buffer[BUFFERSIZE];
 
-	
+	//Envio de mensaje "ficticio"
 	//Es el envio que sirve para establecer la conexión, es decir, es que provoca que se conecte al ls_UDP
 	if (sendto (s, "", BUFFERSIZE,0, (struct sockaddr *)&servaddr_in, addrlen) == -1) {
 		perror(argv[0]);

@@ -54,7 +54,7 @@ int obtenerNumero(char *cadena){
 
 
 //Como estará en un archivo externo, le pasare, o el nombre del fichero cliente o del fichero servidor
-int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio, char* protocolo, int comprobacion){
+int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnvio, char* protocolo, int comprobacion, unsigned int puerto){
 	
 	FILE *Fich;
 	long timevar;
@@ -86,10 +86,10 @@ int aniadirAlLog( char *cadena, struct sockaddr_in clientaddr_in, char *dondeEnv
 		
 	if(comprobacion == 1){
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d:%02d:%02d || Respuesta enviada al servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE CLIENTE: %s\n", 
-		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
+		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, puerto, cadena);
 	}else{
 		fprintf(Fich, "[FECHA Y HORA DEL COMIENZO]:  %02d-%02d-%04d | %02d %02d %02d || Respuesta recibida del servidor: %s || IP: %s || PROTOCOLO: %s || PUERTO: %u || MENSAJE SERVIDOR: %s\n", 
-		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, ntohs(clientaddr_in.sin_port), cadena);
+		ltime->tm_mday, ltime->tm_mon+1, ltime->tm_year+1900, hora, minutos, segundos, dondeEnvio, ipCliente, protocolo, puerto, cadena);
 	
 	}
 	
